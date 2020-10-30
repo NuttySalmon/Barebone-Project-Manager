@@ -1,12 +1,13 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import ExampleApi from './ExampleApi';
+import NavB from './layout/NavB'; 
 
 function App() {
   return (
-    <Container className="App">
-     <h1> Barebone Project Manager </h1> 
-     <ExampleApi/>
+    <Container fluid className="App">
+     <NavB/>
+     {/* <ExampleApi/> */}
     </Container>
   );
 }
