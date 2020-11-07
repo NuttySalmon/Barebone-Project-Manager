@@ -9,6 +9,8 @@ class SignUp extends Component {
     password:''
   }
 
+  
+
   render() {
     return (
       <div className='container'>

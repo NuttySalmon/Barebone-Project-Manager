@@ -4,6 +4,7 @@ import ExampleApi from './ExampleApi';
 import Navbar from './layout/Navbar'; 
 import SignIn from './components/authorization/SignIn';
 import SignUp from './components/authorization/SignUp';
+import createProject from './components/projects/createProject'; 
 
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/signin' component={SignIn} />
             <Route path='/signup' component ={SignUp} />
+            <Route path='/create' component = {createProject} />
           </Switch>
         </div>
       </BrowserRouter>
