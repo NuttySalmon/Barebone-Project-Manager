@@ -1,7 +1,6 @@
 const express = require('express')
-const debug = require('debug')('debug:example')
 const router = express.Router()
-const { ExampleData } = require('../models')
+const { PageData } = require('../models')
 
 router.put('/', (req, res) => {
   const entry = { author: req.body.author, data: req.body.data }

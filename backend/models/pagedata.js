@@ -11,19 +11,19 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  User.init(
+  Page.init(
     { 
       start_date: {
-        type: DataTypes.STRING,
-        primaryKey: true,
+        type: DataTypes.DataTypes,
+        primaryKey: false,
         allowNull: false,
-        unique: true,
+        unique: false,
       },
       end_date: {
-        type: DataTypes.STRING,
-        primaryKey: true,
+        type: DataTypes.DataTypes,
+        primaryKey: false,
         allowNull: false,
-        unique: true,
+        unique: false,
       },
       project_name: {
         type: DataTypes.STRING,
@@ -32,12 +32,13 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
       },
       completion_status: {
-        type: DataTypes.STRING,
-        primaryKey: true,
+        type: DataTypes.init,
+        primaryKey: false,
         allowNull: false,
-        unique: true,
+        unique: false,
       },
     },
+    
     {
       sequelize,
       modelName: 'PageData',
