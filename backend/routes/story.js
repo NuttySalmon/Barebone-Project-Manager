@@ -5,4 +5,4 @@ router.get('/', (req, res) => {
   console.log(res.body); 
 })
 
-module.exports = router;
+module.exports = router
