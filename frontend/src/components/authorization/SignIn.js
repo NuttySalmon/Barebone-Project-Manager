@@ -1,7 +1,7 @@
-import React, { Component, useState } from 'react'
-import { Button, Col, Container, Form, Row } from 'react-bootstrap'
-import AuthForm from './AuthForm'
-import style from '../css/authForm.module.css'
+import React, { useState } from 'react'
+import { Button, Col, Form, Row } from 'react-bootstrap'
+import FormContainer from '../../layout/FormContainer'
+import style from '../../layout/css/formContainer.module.css'
 
 const SignIn = () => {
   const handleSubmit = () => {}
@@ -14,16 +14,16 @@ const SignIn = () => {
     setPassword(e.target.value)
   }
   return (
-    <AuthForm>
+    <FormContainer>
       <Col>
-        <h1> Login </h1>
+        <h2> Sign In </h2>
       </Col>
       <Col className={style.form}>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="usernameInput">
             <Form.Control
               type="text"
-              placeholder="Enter username"
+              placeholder="Username"
               value={username}
               onChange={onChangeUsername}
             />
@@ -35,7 +35,7 @@ const SignIn = () => {
           <Button>Submit</Button>
         </Form>
       </Col>
-    </AuthForm>
+    </FormContainer>
   )
 }
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Container, Row } from 'react-bootstrap'
-import bg from '../../img/data-providing.jpg'
-import style from '../css/authForm.module.css'
-const AuthForm = ({ children }) => {
+import bg from '../img/data-providing.jpg'
+import style from './css/formContainer.module.css'
+const FormContainer = ({ children }) => {
   return (
     <Container fluid className={style.wrapper}>
       <div
@@ -14,4 +14,4 @@ const AuthForm = ({ children }) => {
   )
 }
 
-export default AuthForm
+export default FormContainer
