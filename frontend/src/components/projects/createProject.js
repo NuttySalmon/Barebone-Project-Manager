@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react'
 import { Form, Col, Button, Row } from 'react-bootstrap'
 import FormContainer from '../../layout/FormContainer'
 import style from '../../layout/css/formContainer.module.css'
+import axios from 'axios'; 
 const CreateProject = () => {
   const [storyData, setProjectData] = useState({
     name: '',
@@ -10,7 +11,12 @@ const CreateProject = () => {
     progress: '',
   })
 
-  const handleSubmit = () => {}
+  const handleSubmit = (e) => {
+    e.preventDefault(); 
+    console.log(storyData);
+    axios.post('/api/createstory', {data: storyData}); 
+    
+  }
 
   const handleChange = (event, field) => {
     let value = event.target.value
@@ -73,7 +79,7 @@ const CreateProject = () => {
             />
           </Form.Group>
 
-          <Button>Create</Button>
+          <Button type='submit'>Create</Button>
         </Form>
       </Row>
     </FormContainer>
