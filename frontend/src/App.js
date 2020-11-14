@@ -4,7 +4,7 @@ import ExampleApi from './ExampleApi';
 import Navbar from './layout/Navbar'; 
 import SignIn from './components/authorization/SignIn';
 import SignUp from './components/authorization/SignUp';
-import createProject from './components/projects/createProject'; 
+import createProject from './components/projects/StoryCreate'; 
 
 
 class App extends Component {
