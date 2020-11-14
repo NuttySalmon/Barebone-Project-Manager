@@ -3,18 +3,18 @@ import { Form, Col, Button, Row } from 'react-bootstrap'
 import FormContainer from '../../layout/FormContainer'
 import style from '../../layout/css/formContainer.module.css'
 import axios from 'axios'; 
-const CreateProject = () => {
+const StoryCreate = () => {
   const [storyData, setProjectData] = useState({
     name: '',
-    sdate: '',
-    edate: '',
+    start_date: '',
+    end_date: '',
     progress: '',
   })
 
   const handleSubmit = (e) => {
     e.preventDefault(); 
     console.log(storyData);
-    axios.post('/api/createstory', {data: storyData}); 
+    axios.post('/api/story/create', {data: storyData}); 
     
   }
 
@@ -50,9 +50,9 @@ const CreateProject = () => {
           <Form.Group>
             <Form.Control
               type="date"
-              value={storyData.sdate}
+              value={storyData.start_date}
               onChange={e => {
-                handleChange(e, 'sdate')
+                handleChange(e, 'start_date')
               }}
               placeholder="Start date"
             />
@@ -61,9 +61,9 @@ const CreateProject = () => {
             <Form.Control
             className="dark"
               type="date"
-              value={storyData.edate}
+              value={storyData.end_date}
               onChange={e => {
-                handleChange(e, 'edate')
+                handleChange(e, 'end_date')
               }}
               placeholder="End date"
             />
@@ -85,4 +85,4 @@ const CreateProject = () => {
     </FormContainer>
   )
 }
-export default CreateProject
+export default StoryCreate
