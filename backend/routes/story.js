@@ -1,8 +1,19 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express')
+var router = express.Router()
+const { StoryData } = require('../models')
+const debug = require('debug')('debug:story')
 
-router.get('/', (req, res) => {
-  console.log(res.body); 
+router.post('/create', async (req, res) => {
+  console.log(req.body)
+  try {
+    await StoryData.create(req.body.data, {
+      fields: ['name', 'start_date', 'end_date'],
+    })
+    res.send(200)
+  } catch (error) {
+    debug(error)
+    res.send(500)
+  }
 })
 
 module.exports = router
