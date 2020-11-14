@@ -1,9 +1,26 @@
 import React, { Component, useState } from 'react'
-import { Form, Col, Button, Row } from 'react-bootstrap'
+import { Button, makeStyles, Grid, TextField, Box } from '@material-ui/core'
 import FormContainer from '../../layout/FormContainer'
-import style from '../../layout/css/formContainer.module.css'
-import axios from 'axios'; 
+import { ArrowForward } from '@material-ui/icons'
+import axios from 'axios'
+
+const textFieldAttrib = {
+  fullWidth: true,
+  margin: 'normal',
+}
+
+const useStyles = makeStyles(theme => ({
+  arrow: {
+    height: '100%',
+    paddingTop: '100%',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
+}))
+
 const StoryCreate = () => {
+  const classes = useStyles()
   const [storyData, setProjectData] = useState({
     name: '',
     start_date: '',
@@ -11,11 +28,10 @@ const StoryCreate = () => {
     progress: '',
   })
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); 
-    console.log(storyData);
-    axios.post('/api/story/create', {data: storyData}); 
-    
+  const handleSubmit = e => {
+    e.preventDefault()
+    console.log(storyData)
+    axios.post('/api/story/create', { data: storyData })
   }
 
   const handleChange = (event, field) => {
@@ -31,57 +47,86 @@ const StoryCreate = () => {
   }
 
   return (
-    <FormContainer>
-      <Row>
-        <h2>New Story</h2>
-      </Row>
-      <Row>
-        <Form onSubmit={handleSubmit} className={style.form}>
-          <Form.Group>
-            <Form.Control
-              type="text"
+    <FormContainer title="New story">
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={2}>
+          <Grid xs={12} item>
+            <TextField
+              {...textFieldAttrib}
               value={storyData.name}
               onChange={e => {
                 handleChange(e, 'name')
               }}
-              placeholder="Story name"
+              label="Story name"
             />
-          </Form.Group>
-          <Form.Group>
-            <Form.Control
-              type="date"
-              value={storyData.start_date}
-              onChange={e => {
-                handleChange(e, 'start_date')
-              }}
-              placeholder="Start date"
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Control
-            className="dark"
-              type="date"
-              value={storyData.end_date}
-              onChange={e => {
-                handleChange(e, 'end_date')
-              }}
-              placeholder="End date"
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Control
-              type="number"
-              value={storyData.progress}
-              onChange={e => {
-                handleChange(e, 'progress')
-              }}
-              placeholder="Progress %"
-            />
-          </Form.Group>
+          </Grid>
+          <Grid xs={12} container item>
+            {/* Dates */}
+            <Grid xs={12} md={9} container item spacing={2} alignItems="center">
+              <Grid xs={12} md={5} item>
+                <TextField
+                  {...textFieldAttrib}
+                  type="date"
+                  value={storyData.start_date}
+                  onChange={e => {
+                    handleChange(e, 'start_date')
+                  }}
+                  label="Start date"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+              <Grid xs={0} md="auto" item>
+                <ArrowForward className={classes.arrow} />
+              </Grid>
+              <Grid xs={12} md={5} item>
+                <TextField
+                  {...textFieldAttrib}
+                  type="date"
+                  value={storyData.end_date}
+                  onChange={e => {
+                    handleChange(e, 'end_date')
+                  }}
+                  label="End date"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+            </Grid>
 
-          <Button type='submit'>Create</Button>
-        </Form>
-      </Row>
+            {/* Progress */}
+            <Grid xs={12} md={3} container item alignItems="center" spacing={1}>
+              <Grid item xs={11}>
+                <TextField
+                  {...textFieldAttrib}
+                  type="number"
+                  value={storyData.progress}
+                  onChange={e => {
+                    handleChange(e, 'progress')
+                  }}
+                  label="Progress"
+                />
+              </Grid>
+              <Grid xs={1} item>
+                <Box pt={3} fontSize="15px">
+                  %
+                </Box>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid xs={12} item>
+            <TextField {...textFieldAttrib} rows={5} multiline label="Details" />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Button type="submit" variant="contained" color="primary">
+              Create
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
     </FormContainer>
   )
 }

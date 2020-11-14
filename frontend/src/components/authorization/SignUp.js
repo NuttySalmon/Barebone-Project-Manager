@@ -1,8 +1,16 @@
+// @flow
 import React, { useState } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import {
+  Button,
+  TextField,
+  Grid,
+} from '@material-ui/core'
 import FormContainer from '../../layout/FormContainer'
-import style from '../../layout/css/formContainer.module.css'
 
+const textFieldAttrib = {
+  fullWidth: true,
+  margin: 'normal',
+}
 const SignUp = () => {
   const handleSubmit = () => {}
   const [userInfo, setUserInfo] = useState({
@@ -17,60 +25,57 @@ const SignUp = () => {
   }
 
   return (
-    <FormContainer>
-      <Col>
-        <h2> Sign Up </h2>
-      </Col>
-      <Col className={style.form}>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group>
-            <Form.Control
-              type="text"
-              placeholder="First name"
+    <FormContainer title="Sign Up">
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={2}>
+          <Grid xs={12} md={6} item>
+            <TextField
+              label="First name"
               value={userInfo.firstName}
               onChange={e => {
                 handleOnChange(e, 'firstName')
               }}
+              {...textFieldAttrib}
             />
-          </Form.Group>
-          <Form.Group>
-            <Form.Control
-              type="text"
-              placeholder="Last name"
+          </Grid>
+          <Grid xs={12} md={6} item>
+            <TextField
+              label="Last name"
               value={userInfo.lastName}
               onChange={e => {
                 handleOnChange(e, 'lastName')
               }}
+              {...textFieldAttrib}
             />
-          </Form.Group>
-
-          <Form.Group>
-            <Form.Control
-              style={{marginBottom: '0'}}
-              type="text"
-              placeholder="Pick a username"
+          </Grid>
+          <Grid xs={12} item>
+            <TextField
+              label="Pick a username"
               value={userInfo.username}
               onChange={e => {
                 handleOnChange(e, 'username')
               }}
+              {...textFieldAttrib}
             />
-            <Form.Text muted className="mt-0">Will be used for sign in.</Form.Text>
-          </Form.Group>
-
-          <Form.Group>
-            <Form.Control
-              style={{marginTop: '1em'}}
+          </Grid>
+          <Grid xs={12} item>
+            <TextField
               type="password"
               value={userInfo.password}
               onChange={e => {
                 handleOnChange(e, 'password')
               }}
-              placeholder="Enter password"
+              label="Enter password"
+              {...textFieldAttrib}
             />
-          </Form.Group>
-          <Button>Submit</Button>
-        </Form>
-      </Col>
+          </Grid>
+          <Grid item>
+            <Button variant="contained" color="primary" type="submit">
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
     </FormContainer>
   )
 }
