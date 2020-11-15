@@ -22,19 +22,19 @@ export const ExampleForm = ({
     <Form onSubmit={onSubmit}>
       <Form.Row className="align-items-center">
         <Col xs="auto">
-          <Form.Control
+          <TextField
             className="mb-2"
             id="inlineFormInput"
-            placeholder="Author (unique)"
+            label="Author (unique)"
             onChange={onChangeAuthor}
             value={author}
           />
         </Col>
         <Col xs="auto">
-          <Form.Control
+          <TextField
             className="mb-2"
             id="inlineFormInput"
-            placeholder="Message"
+            label="Message"
             onChange={onChangeMsg}
             value={msg}
           />

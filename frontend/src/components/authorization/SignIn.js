@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import { Button, Grid, TextField } from '@material-ui/core'
 import FormContainer from '../../layout/FormContainer'
-import style from '../../layout/css/formContainer.module.css'
+
+const textFieldAttrib = {
+  fullWidth: true,
+  margin: 'normal',
+}
 
 const SignIn = () => {
   const handleSubmit = () => {}
@@ -13,28 +17,35 @@ const SignIn = () => {
   const onChangePassword = e => {
     setPassword(e.target.value)
   }
+
   return (
-    <FormContainer>
-      <Col>
-        <h2> Sign In </h2>
-      </Col>
-      <Col className={style.form}>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="usernameInput">
-            <Form.Control
-              type="text"
-              placeholder="Username"
+    <FormContainer title="Sign in">
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={2}>
+          <Grid xs={12} item>
+            <TextField
+              label="Username"
               value={username}
               onChange={onChangeUsername}
+              {...textFieldAttrib}
             />
-          </Form.Group>
-
-          <Form.Group controlId="formBasicPassword">
-            <Form.Control type="password" placeholder="Password" />
-          </Form.Group>
-          <Button>Submit</Button>
-        </Form>
-      </Col>
+          </Grid>
+          <Grid xs={12} item>
+            <TextField
+              label="Password"
+              type="password"
+              value={password}
+              onChange={onChangePassword}
+              {...textFieldAttrib}
+            />
+          </Grid>
+          <Grid item>
+            <Button variant="contained" color="primary" type="submit">
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
     </FormContainer>
   )
 }

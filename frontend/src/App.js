@@ -1,28 +1,37 @@
-import React, { Component } from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom'; 
-import ExampleApi from './ExampleApi';
-import Navbar from './layout/Navbar'; 
-import SignIn from './components/authorization/SignIn';
-import SignUp from './components/authorization/SignUp';
-import createProject from './components/projects/StoryCreate'; 
+import React, { Component } from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import Navbar from './layout/Navbar'
+import SignIn from './components/authorization/SignIn'
+import SignUp from './components/authorization/SignUp'
+import createProject from './components/projects/StoryCreate'
+import { CssBaseline, Grid, makeStyles, ThemeProvider } from '@material-ui/core'
+import theme from './theme'
+import Dashboard from './components/Dashboard'
 
+const useStyles = makeStyles(theme => ({
+  content: {
+    paddingTop: '64px',
+  },
+}))
 
-class App extends Component {
-
-  render() {
-    return (
+const App = () => {
+  const classes = useStyles()
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline/>
       <BrowserRouter>
-        <div className='App' style={{height: '100'}}>
-          <Navbar /> 
+          <Navbar />
+          <div className={classes.content}>
           <Switch>
-            <Route exact path='/signin' component={SignIn} />
-            <Route path='/signup' component ={SignUp} />
-            <Route path='/create' component = {createProject} />
+            <Route exact path="/" component={Dashboard} />
+            <Route path="/signin" component={SignIn} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/create" component={createProject} />
           </Switch>
-        </div>
+          </div>
       </BrowserRouter>
-    );
-  }
+    </ThemeProvider>
+  )
 }
 
-export default App;
+export default App

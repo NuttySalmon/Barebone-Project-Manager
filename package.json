@@ -7,10 +7,6 @@
   "scripts": {
     "start": "concurrently \"cd backend && npm run start-watch\" \"cd frontend && npm start\""
   },
-  "dependencies": {
-    "express": "^4.17.1",
-    "react-router-dom": "^5.2.0"
-  },
   "proxy": "http://localhost:8000",
   "devDependencies": {
     "concurrently": "^5.3.0",
