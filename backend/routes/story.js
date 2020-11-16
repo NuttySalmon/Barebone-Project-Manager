@@ -7,7 +7,7 @@ router.post('/create', async (req, res) => {
   console.log(req.body)
   try {
     await StoryData.create(req.body.data, {
-      fields: ['name', 'start_date', 'end_date'],
+      fields: ['story_name', 'start_date', 'end_date'],
     })
     res.send(200)
   } catch (error) {
