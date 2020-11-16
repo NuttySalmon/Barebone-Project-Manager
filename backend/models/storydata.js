@@ -8,12 +8,18 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      Story.hasMany(models.Task, {
+        onDelete: "cascade"
+      })
+      Story.belongsToMany(models.User, {
+        through: "User_Story"
+      })
       // define association here
     }
   }
   Story.init(
     {
-      id: {
+      story_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
@@ -24,17 +30,21 @@ module.exports = (sequelize, DataTypes) => {
       },
       end_date: {
         type: DataTypes.DATEONLY,
-        allowNull: false,
+        allowNull: true,
       },
-      name: {
+      story_name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      status: {
+      story_creator: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      story_status: {
         type: DataTypes.INTEGER,
         defaultValue: 0
       },
-      progress:{
+      story_progress:{
         type: DataTypes.INTEGER
       }
     },
