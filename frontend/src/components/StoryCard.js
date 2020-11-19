@@ -3,19 +3,30 @@ import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
-import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import {
   SettingsOutlined as SettingsIcon,
   Event as DateIcon,
   Person as PersonIcon,
 } from '@material-ui/icons'
-import { Box, Chip, Grid, IconButton } from '@material-ui/core'
+import {
+  Avatar,
+  Box,
+  Chip,
+  Grid,
+  IconButton,
+  Tooltip,
+  Link,
+} from '@material-ui/core'
+import { Link as RouterLink } from 'react-router-dom'
+
 const useStyles = makeStyles(theme => ({
   root: {
-    // border: '2px solid black',
-    // minWidth: 275,
-    // width: 200
+    transition: "all 0.1s",
+    '&:hover': {
+      outlineColor: theme.palette.primary.main,
+      outlineStyle: "solid"
+    },
   },
   bullet: {
     display: 'inline-block',
@@ -40,6 +51,9 @@ const useStyles = makeStyles(theme => ({
   icon: {
     marginRight: theme.spacing(1),
   },
+  textContent: {
+    float: 'left',
+  },
 }))
 
 export default function StoryCard() {
@@ -49,10 +63,19 @@ export default function StoryCard() {
   return (
     <Grid item>
       <Card elevation={3} className={classes.root}>
-        <IconButton size="small" className={classes.button}>
-          <SettingsIcon style={{ width: 20 }} />
-        </IconButton>
-        <CardContent>
+        <Tooltip title="Edit story">
+          <IconButton size="small" className={classes.button}>
+            <SettingsIcon style={{ width: 20 }} />
+          </IconButton>
+        </Tooltip>
+        <CardContent className={classes.textContent}>
+          <Typography variant="body2">
+            <Tooltip title="View story details">
+              <Link component={RouterLink} to="/story/123">
+                #123
+              </Link>
+            </Tooltip>
+          </Typography>
           <Typography variant="h6" gutterBottom>
             Story bla bla
           </Typography>
@@ -65,10 +88,12 @@ export default function StoryCard() {
             <Grid container item alignItems="center">
               <PersonIcon className={classes.icon} />
               <Chip
+                avatar={<Avatar>J</Avatar>}
                 label="John Doe"
                 size="small"
                 variant="outlined"
                 color="primary"
+                clickable
               />
             </Grid>
           </Typography>
