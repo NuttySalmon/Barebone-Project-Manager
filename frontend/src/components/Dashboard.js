@@ -7,6 +7,7 @@ import {
   Grid,
   IconButton,
   makeStyles,
+  Tooltip,
   Typography,
 } from '@material-ui/core'
 import StoryCard from './StoryCard'
@@ -49,13 +50,15 @@ const Dashboard = () => {
             </Typography>
           </div>
           <Link to="create">
-            <IconButton>
-              <Add />
-            </IconButton>
+            <Tooltip title="Add a new story" aria-label="add">
+              <IconButton>
+                <Add />
+              </IconButton>
+            </Tooltip>
           </Link>
         </Grid>
       </Box>
-      <Grid container direction="row" spacing={0}>
+      <Grid container direction="row">
         <DashboardCol title="Backlog">
           <StoryCard />
           <StoryCard />
@@ -75,6 +78,7 @@ const Dashboard = () => {
           <StoryCard />
         </DashboardCol>
         <DashboardCol title="Completed">
+          <StoryCard />
           <StoryCard />
           <StoryCard />
           <StoryCard />
