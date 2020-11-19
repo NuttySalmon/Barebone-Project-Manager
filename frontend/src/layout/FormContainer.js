@@ -26,6 +26,7 @@ const useStyles = makeStyles(theme => ({
   title: {
     textAlign: 'center',
     alignSelf: 'center',
+    color: theme.palette.primary.main,
     [theme.breakpoints.down('sm')]: {
       textAlign: 'left',
     },
