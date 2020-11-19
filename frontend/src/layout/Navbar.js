@@ -19,10 +19,15 @@ const useStyles = makeStyles(theme => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
+    color: theme.palette.primary.main,
   },
   title: {
     flexGrow: 1,
     display: 'none',
+    color: theme.palette.text.disabled,
+    "&:hover":{
+      color: theme.palette.primary.main,
+    },
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
@@ -30,9 +35,9 @@ const useStyles = makeStyles(theme => ({
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: fade(theme.palette.grey.main, 0.35),
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
+      backgroundColor: fade(theme.palette.grey.main, 0.55),
     },
     marginLeft: 0,
     width: '100%',
@@ -49,6 +54,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    color: theme.palette.primary.main,
   },
   inputRoot: {
     color: 'inherit',
@@ -73,7 +79,7 @@ const NavBar = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed">
+      <AppBar position="fixed" color="white">
         <Toolbar className={classes.bar}>
           <IconButton
             edge="start"
