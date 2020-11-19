@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react'
 import { Button, makeStyles, Grid, TextField, Box } from '@material-ui/core'
-import FormContainer from '../../layout/FormContainer'
+import FormContainer from '../layout/FormContainer'
 import { ArrowForward } from '@material-ui/icons'
 import axios from 'axios'
 
