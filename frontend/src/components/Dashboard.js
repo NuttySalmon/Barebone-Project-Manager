@@ -12,7 +12,8 @@ import {
 } from '@material-ui/core'
 import StoryCard from './StoryCard'
 import DashboardCol from './DashboardCol'
-import theme from '../theme'
+import { DndProvider, useDrag } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 const useStyle = makeStyles(theme => ({
   root: {
     paddingLeft: theme.spacing(9),
@@ -41,54 +42,59 @@ const Dashboard = () => {
   const classes = useStyle()
   useEffect(() => {})
   return (
-    <Container maxWidth="xl" className={classes.root}>
-      <Box mb={2}>
-        <Grid container alignItems="center">
-          <div>
-            <Typography color="primary" variant="h4" component="h1">
-              Story Board
-            </Typography>
-          </div>
-          <Link to="create">
-            <Tooltip title="Add a new story" aria-label="add">
-              <IconButton>
-                <Add />
-              </IconButton>
-            </Tooltip>
-          </Link>
+    <DndProvider backend={HTML5Backend}>
+      <Container maxWidth="xl" className={classes.root}>
+        <Box mb={2}>
+          <Grid container alignItems="center">
+            <div>
+              <Typography color="primary" variant="h4" component="h1">
+                Story Board
+              </Typography>
+            </div>
+            <Link to="create">
+              <Tooltip title="Add a new story" aria-label="add">
+                <IconButton>
+                  <Add />
+                </IconButton>
+              </Tooltip>
+            </Link>
+          </Grid>
+        </Box>
+        <Grid container direction="row">
+          <DashboardCol title="Backlog">
+            <StoryCard />
+            <StoryCard />
+            <StoryCard />
+            <StoryCard />
+          </DashboardCol>
+          <DashboardCol title="Ready">
+            <StoryCard />
+            <StoryCard />
+            <StoryCard />
+            <StoryCard />
+          </DashboardCol>
+          <DashboardCol title="On Going">
+            <StoryCard />
+            <StoryCard />
+            <StoryCard />
+            <StoryCard />
+          </DashboardCol>
+          <DashboardCol title="Completed">
+            <StoryCard />
+            <StoryCard />
+            <StoryCard />
+            <StoryCard />
+            <StoryCard />
+          </DashboardCol>
         </Grid>
-      </Box>
-      <Grid container direction="row">
-        <DashboardCol title="Backlog">
-          <StoryCard />
-          <StoryCard />
-          <StoryCard />
-          <StoryCard />
-        </DashboardCol>
-        <DashboardCol title="Ready">
-          <StoryCard />
-          <StoryCard />
-          <StoryCard />
-          <StoryCard />
-        </DashboardCol>
-        <DashboardCol title="On Going">
-          <StoryCard />
-          <StoryCard />
-          <StoryCard />
-          <StoryCard />
-        </DashboardCol>
-        <DashboardCol title="Completed">
-          <StoryCard />
-          <StoryCard />
-          <StoryCard />
-          <StoryCard />
-          <StoryCard />
-        </DashboardCol>
-      </Grid>
-      <Link to="signin"> Sign in </Link>
-      <Link to="signup"> Sign up </Link>
-    </Container>
+        <Link to="signin"> Sign in </Link>
+        <Link to="signup"> Sign up </Link>
+      </Container>
+    </DndProvider>
   )
+}
+export const DragItemTypes = {
+  CARD: 'storycard',
 }
 
 export default Dashboard

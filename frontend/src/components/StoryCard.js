@@ -4,6 +4,8 @@ import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
+import { useDrag } from 'react-dnd'
+
 import {
   SettingsOutlined as SettingsIcon,
   Event as DateIcon,
@@ -19,13 +21,22 @@ import {
   Link,
 } from '@material-ui/core'
 import { Link as RouterLink } from 'react-router-dom'
+import { DragItemTypes } from './Dashboard'
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    transition: "all 0.1s",
+  dragging: {
+    opacity: 0.3,
+  },
+  card: {
+    transition: 'all 0.1s',
     '&:hover': {
       outlineColor: theme.palette.primary.main,
-      outlineStyle: "solid"
+      outlineStyle: 'solid',
+    },
+  },
+  cardDragging: {
+    '&:hover': {
+      outlineStyle: 'none',
     },
   },
   bullet: {
@@ -58,11 +69,18 @@ const useStyles = makeStyles(theme => ({
 
 export default function StoryCard() {
   const classes = useStyles()
-  // const bull = <span className={classes.bullet}>•</span>;
-
+  const [{ isDragging }, drag] = useDrag({
+    item: { type: DragItemTypes.CARD },
+    collect: monitor => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  })
   return (
-    <Grid item>
-      <Card elevation={3} className={classes.root}>
+    <Grid ref={drag} item className={isDragging && classes.dragging}>
+      <Card
+        elevation={3}
+        className={`${classes.card} ${isDragging && classes.cardDragging}`}
+      >
         <Tooltip title="Edit story">
           <IconButton size="small" className={classes.button}>
             <SettingsIcon style={{ width: 20 }} />
