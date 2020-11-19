@@ -29,10 +29,9 @@ const useStyles = makeStyles(theme => ({
     transition: 'all 1s',
     outline: '3px solid #cee0e6',
   },
-  bold: {
-    fontWeight: 'bold',
-  },
+  bold: { fontWeight: 'bold' },
 }))
+
 const DashboardCol = ({ children, title }) => {
   const [{ isOver }, drop] = useDrop({
     accept: DragItemTypes.CARD,

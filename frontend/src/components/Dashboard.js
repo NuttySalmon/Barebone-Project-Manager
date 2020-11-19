@@ -14,6 +14,7 @@ import StoryCard from './StoryCard'
 import DashboardCol from './DashboardCol'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+
 const useStyle = makeStyles(theme => ({
   root: {
     paddingLeft: theme.spacing(9),
@@ -25,18 +26,15 @@ const useStyle = makeStyles(theme => ({
     right: theme.spacing(10),
     bottom: theme.spacing(5),
     color: theme.palette.primary.main,
-
     '& > *': {
       fontSize: 70,
       transition: 'all 0.2s',
       filter: 'drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.5))',
-      '&:hover': {
-        fontSize: 72,
-        color: theme.palette.primary.dark,
-      },
+      '&:hover': { fontSize: 72, color: theme.palette.primary.dark },
     },
   },
 }))
+
 const Dashboard = () => {
   // for loading when getting data
   const [ready, setReady] = useState(false)

@@ -7,7 +7,7 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core'
-// import bg from '../img/data-providing.jpg'
+
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(5),
@@ -15,25 +15,16 @@ const useStyles = makeStyles(theme => ({
     height: '600px',
     minHeight: 'fit-content',
     alignItems: 'center',
-    [theme.breakpoints.down('sm')]:{
-      height: '100%'
-    }
+    [theme.breakpoints.down('sm')]: { height: '100%' },
   },
-  wrap: {
-    height: '100%',
-      justifyContent: 'center',
-  },
+  wrap: { height: '100%', justifyContent: 'center' },
   title: {
     textAlign: 'center',
     alignSelf: 'center',
     color: theme.palette.primary.main,
-    [theme.breakpoints.down('sm')]: {
-      textAlign: 'left',
-    },
+    [theme.breakpoints.down('sm')]: { textAlign: 'left' },
   },
-  form: {
-    alignSelf: 'center',
-  },
+  form: { alignSelf: 'center' },
 }))
 
 const FormContainer = ({ title, children }) => {
