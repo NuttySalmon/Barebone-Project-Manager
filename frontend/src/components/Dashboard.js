@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core'
 import StoryCard from './StoryCard'
 import DashboardCol from './DashboardCol'
-import { DndProvider, useDrag } from 'react-dnd'
+import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 const useStyle = makeStyles(theme => ({
   root: {
@@ -38,6 +38,7 @@ const useStyle = makeStyles(theme => ({
   },
 }))
 const Dashboard = () => {
+  // for loading when getting data
   const [ready, setReady] = useState(false)
   const classes = useStyle()
   useEffect(() => {})

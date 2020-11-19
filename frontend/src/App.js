@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Navbar from './layout/Navbar'
 import SignIn from './components/authorization/SignIn'
 import SignUp from './components/authorization/SignUp'
 import createProject from './components/StoryCreate'
-import { CssBaseline, Grid, makeStyles, ThemeProvider } from '@material-ui/core'
+import { CssBaseline, makeStyles, ThemeProvider } from '@material-ui/core'
 import theme from './theme'
 import Dashboard from './components/Dashboard'
 

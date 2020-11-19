@@ -5,7 +5,6 @@ import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import { useDrag } from 'react-dnd'
-
 import {
   SettingsOutlined as SettingsIcon,
   Event as DateIcon,
@@ -13,7 +12,6 @@ import {
 } from '@material-ui/icons'
 import {
   Avatar,
-  Box,
   Chip,
   Grid,
   IconButton,
