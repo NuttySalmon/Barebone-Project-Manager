@@ -7,6 +7,7 @@ const useStyles = makeStyles(theme => ({
     borderWidth: 1,
     outline: "1px solid #cee0e6",
     backgroundColor: '#eff4f7',
+    height: "100%",
   },
   title: {
     color: theme.palette.primary.dark,
@@ -17,11 +18,11 @@ const DashboardCol = ({ children, title }) => {
   const classes = useStyles()
   return (
     <Grid xs={12} md={3} item>
-      <Grid container className={classes.root}>
+      <Grid container direction="column" className={classes.root}>
         <Grid item className={classes.title}>
           <Typography variant="h7">{title.toUpperCase()}</Typography>
         </Grid>
-        <Grid container item direction="column" spacing={2}>
+        <Grid container item direction="column" justify='flex-start' spacing={1}>
           {children}
         </Grid>
       </Grid>
