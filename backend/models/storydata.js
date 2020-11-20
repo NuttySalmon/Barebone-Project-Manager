@@ -29,7 +29,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     progress:{
       type: DataTypes.INTEGER
-    }
+    },
+    details:{
+      type: DataTypes.STRING
+    },
+    Member:{
+      type: DataTypes.STRING
+    },
   });
 
   Story.associate = models => {
@@ -37,9 +43,9 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "cascade"
     });
 
-    Story.belongsToMany(models.User, {
+    /*Story.belongsToMany(models.User, {
       through: "User_Story"
-    });
+    });*/
   };
 
   return Story

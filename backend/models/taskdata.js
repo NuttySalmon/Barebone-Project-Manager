@@ -2,9 +2,16 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   const Task = sequelize.define("Task", {
-    task_name:{
-      type: DataTypes.STRING,
+    task_id:{
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+    },
+    complete: {
+      type: DataTypes.BOOLEAN,
     }
   });
 

@@ -16,11 +16,11 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  User.associate = models => {
+  /*User.associate = models => {
     User.belongsToMany(models.Story, {
       through: "User_Story"
     });
-  };
+  };*/
 
   return User;
 };
