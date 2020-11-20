@@ -2,6 +2,7 @@ import { Grid, makeStyles, Typography } from '@material-ui/core'
 import React from 'react'
 import { useDrop } from 'react-dnd'
 import { DragItemTypes } from './Dashboard'
+import PropTypes from 'prop-types'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -65,6 +66,11 @@ const DashboardCol = ({ children, title }) => {
       </Grid>
     </Grid>
   )
+}
+
+DashboardCol.propTypes = {
+  title: PropTypes.string,
+  children: PropTypes.element,
 }
 
 export default DashboardCol
