@@ -53,7 +53,7 @@ const StoryCreate = () => {
           <Grid xs={12} item>
             <TextField
               {...textFieldAttrib}
-              value={storyData.name}
+              value={storyData.story}
               onChange={e => {
                 handleChange(e, 'name')
               }}
@@ -117,7 +117,12 @@ const StoryCreate = () => {
             </Grid>
           </Grid>
           <Grid xs={12} item>
-            <TextField {...textFieldAttrib} rows={5} multiline label="Details" />
+            <TextField
+              {...textFieldAttrib}
+              rows={5}
+              multiline
+              label="Details"
+            />
           </Grid>
 
           <Grid item xs={12}>

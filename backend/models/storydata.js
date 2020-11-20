@@ -2,7 +2,7 @@
 const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   const Story = sequelize.define("Story", {
-    story_id: {
+    id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
@@ -15,19 +15,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATEONLY,
       allowNull: true,
     },
-    story_name: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    story_creator: {
+    creator: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
-    story_status: {
+    status: {
       type: DataTypes.INTEGER,
       defaultValue: 0
     },
-    story_progress:{
+    progress:{
       type: DataTypes.INTEGER
     }
   });
