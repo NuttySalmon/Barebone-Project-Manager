@@ -14,6 +14,7 @@ import StoryCard from './StoryCard'
 import DashboardCol from './DashboardCol'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
+import Axios from 'axios'
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -38,8 +39,17 @@ const useStyle = makeStyles(theme => ({
 const Dashboard = () => {
   // for loading when getting data
   const [ready, setReady] = useState(false)
+  const [stories, setStories] = useState([])
   const classes = useStyle()
-  useEffect(() => {})
+  const getData = async () => {
+    const result  = await Axios.get('/api/story/all')
+    setStories(result.data)
+    console.log(result)
+    setReady(true)
+  }
+  useEffect(() => {
+    getData()
+  }, [])
   return (
     <DndProvider backend={HTML5Backend}>
       <Container maxWidth="xl" className={classes.root}>
