@@ -79,7 +79,7 @@ const NavBar = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed" color="white">
+      <AppBar position="fixed" color="default">
         <Toolbar className={classes.bar}>
           <IconButton
             edge="start"

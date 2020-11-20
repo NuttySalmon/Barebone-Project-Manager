@@ -47,7 +47,7 @@ const DashboardCol = ({ children, title }) => {
     <Grid xs={12} md={3} item>
       <Grid container direction="column" className={classes.root}>
         <Grid item className={classes.title}>
-          <Typography variant="h7" className={isOver && classes.bold}>
+          <Typography variant="body2" className={`${isOver && classes.bold}`}>
             {title.toUpperCase()}
           </Typography>
         </Grid>

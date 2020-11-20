@@ -54,7 +54,7 @@ export default function StoryCard() {
     }),
   })
   return (
-    <Grid ref={drag} item className={isDragging && classes.dragging}>
+    <Grid ref={drag} item className={`${isDragging && classes.dragging}`}>
       <Card className={classes.card}>
         <Tooltip title="Edit story">
           <IconButton size="small" className={classes.button}>
