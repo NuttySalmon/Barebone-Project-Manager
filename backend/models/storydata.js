@@ -6,10 +6,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
+      allowNull: false
     },
     start_date: {
       type: DataTypes.DATEONLY,
-      allowNull: false,
+      allowNull: true,
     },
     end_date: {
       type: DataTypes.DATEONLY,
@@ -28,13 +29,16 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 0
     },
     progress:{
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      defaultValue:0
     },
     details:{
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: true
     },
     Member:{
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      allowNull: true
     },
   });
 
