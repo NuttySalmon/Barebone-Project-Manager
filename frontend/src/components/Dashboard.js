@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { Add } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import {
@@ -14,7 +14,7 @@ import StoryCard from './StoryCard'
 import DashboardCol from './DashboardCol'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import Axios from 'axios'
+import { StoriesContext } from '../DataWrapper'
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -35,21 +35,11 @@ const useStyle = makeStyles(theme => ({
     },
   },
 }))
-
 const Dashboard = () => {
   // for loading when getting data
-  const [ready, setReady] = useState(false)
-  const [stories, setStories] = useState([])
   const classes = useStyle()
-  const getData = async () => {
-    const result  = await Axios.get('/api/story/all')
-    setStories(result.data)
-    console.log(result)
-    setReady(true)
-  }
-  useEffect(() => {
-    getData()
-  }, [])
+  const storiesContext = useContext(StoriesContext)
+  console.log(storiesContext.stories)
   return (
     <DndProvider backend={HTML5Backend}>
       <Container maxWidth="xl" className={classes.root}>

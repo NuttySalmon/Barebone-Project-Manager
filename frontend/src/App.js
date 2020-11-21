@@ -7,6 +7,7 @@ import createProject from './components/StoryCreate'
 import { CssBaseline, makeStyles, ThemeProvider } from '@material-ui/core'
 import theme from './theme'
 import Dashboard from './components/Dashboard'
+import DataWrapper from './DataWrapper'
 
 const useStyles = makeStyles(theme => ({
   content: {
@@ -18,17 +19,19 @@ const App = () => {
   const classes = useStyles()
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline/>
+      <CssBaseline />
       <BrowserRouter>
-          <Navbar />
-          <div className={classes.content}>
+        <Navbar />
+        <div className={classes.content}>
           <Switch>
-            <Route exact path="/" component={Dashboard} />
             <Route path="/signin" component={SignIn} />
             <Route path="/signup" component={SignUp} />
-            <Route path="/create" component={createProject} />
+            <DataWrapper>
+              <Route path="/create" component={createProject} />
+              <Route exact path="/" component={Dashboard} />
+            </DataWrapper>
           </Switch>
-          </div>
+        </div>
       </BrowserRouter>
     </ThemeProvider>
   )
