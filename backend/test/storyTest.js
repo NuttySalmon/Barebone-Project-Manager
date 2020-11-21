@@ -39,7 +39,7 @@ describe('/CREATE story', () => {
         res.should.have.status(200)
         res.body.should.be.a('object')
         res.body.should.have.property('data')
-        const {data} = res.body
+        const { data } = res.body
         data.should.have.property('id')
         data.should.have.property('status')
         data.should.have.property('name').eq(story.name)
@@ -55,6 +55,34 @@ describe('/CREATE story', () => {
       .end((_err, res) => {
         res.should.have.status(400)
         done()
+      })
+  })
+})
+
+describe('/PUT update story status', () => {
+  const url = '/api/story/status-update'
+  it('should update story status', done => {
+    const story = {
+      name: 'test story',
+    }
+    chai
+      .request(app)
+      .post('/api/story/create')
+      .send({ data: story })
+      .end((err, res) => {
+        const { id } = res.body.data
+        chai
+          .request(app)
+          .put(url)
+          .send({ data: { id: id, status: 2 } })
+          .end((err, res) => {
+            res.should.have.status(200)
+            res.body.data.should.have
+              .property('affectedRows')
+              .be.a('number')
+              .eq(1)
+            done()
+          })
       })
   })
 })
