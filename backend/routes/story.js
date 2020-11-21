@@ -8,7 +8,7 @@ router.post('/create', async (req, res) => {
     const result = await Story.create(req.body.data, {
       fields: ['name', 'start_date', 'end_date', 'progress'],
     })
-    res.status(200).send({ data: result.dataValues })
+    res.status(200).send(result.dataValues)
   } catch (error) {
     if (error.name === 'SequelizeValidationError') res.status(400).send(error)
     res.status(500).send(error)
@@ -18,7 +18,7 @@ router.post('/create', async (req, res) => {
 router.get('/all', async (req, res) => {
   try {
     const result = await Story.findAll()
-    res.send({ data: result }).status(200)
+    res.send(result).status(200)
   } catch (error) {
     debug(error)
     res.status(500).send(error)
@@ -35,7 +35,7 @@ router.put('/status-update', async (req, res) => {
       { status: Math.floor(data.status) },
       { where: { id: data.id } }
     )
-    res.status(200).send({ data: { affectedRows: result[0] } })
+    res.status(200).send({ affectedRows: result[0] })
   } catch (error) {
     debug(error)
     console.log(error)
