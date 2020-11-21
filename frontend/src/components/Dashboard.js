@@ -1,11 +1,13 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Add } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import {
   Box,
+  CircularProgress,
   Container,
   Grid,
   IconButton,
+  LinearProgress,
   makeStyles,
   Tooltip,
   Typography,
@@ -34,11 +36,33 @@ const useStyle = makeStyles(theme => ({
       '&:hover': { fontSize: 72, color: theme.palette.primary.dark },
     },
   },
+  colContainer: {
+    minHeight: '80vh',
+  },
 }))
+const colNames = ['Backlog', 'Ready', 'On Going', 'Completed']
+
 const Dashboard = () => {
   // for loading when getting data
   const classes = useStyle()
-  const storiesContext = useContext(StoriesContext)
+  const { storiesCol, ready } = useContext(StoriesContext)
+
+  /**
+   * 
+   * @param {number} statusNum 
+   */
+  const getStories = statusNum => {
+    const storyArr = Object.values(storiesCol[statusNum])
+    return storyArr.map(story => <StoryCard {...story} />)
+  }
+
+  const getCols = () => {
+    return colNames.map((name, statusNum) => (
+      <DashboardCol title={name} statusNum={statusNum} key={statusNum}>
+        {getStories(statusNum)}
+      </DashboardCol>
+    ))
+  }
   return (
     <DndProvider backend={HTML5Backend}>
       <Container maxWidth="xl" className={classes.root}>
@@ -58,31 +82,8 @@ const Dashboard = () => {
             </Link>
           </Grid>
         </Box>
-        <Grid container direction="row">
-          <DashboardCol title="Backlog">
-            <StoryCard />
-            <StoryCard />
-            <StoryCard />
-          </DashboardCol>
-          <DashboardCol title="Ready">
-            <StoryCard />
-            <StoryCard />
-            <StoryCard />
-            <StoryCard />
-          </DashboardCol>
-          <DashboardCol title="On Going">
-            <StoryCard />
-            <StoryCard />
-            <StoryCard />
-            <StoryCard />
-          </DashboardCol>
-          <DashboardCol title="Completed">
-            <StoryCard />
-            <StoryCard />
-            <StoryCard />
-            <StoryCard />
-            <StoryCard />
-          </DashboardCol>
+        <Grid container direction="row" className={classes.colContainer}>
+          {getCols()}
         </Grid>
         <Link to="signin"> Sign in </Link>
         <Link to="signup"> Sign up </Link>

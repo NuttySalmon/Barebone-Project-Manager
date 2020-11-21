@@ -33,11 +33,13 @@ const useStyles = makeStyles(theme => ({
   bold: { fontWeight: 'bold' },
 }))
 
-const DashboardCol = ({ children, title }) => {
+const DashboardCol = ({ children, title, statusNum }) => {
   const [{ isOver }, drop] = useDrop({
     accept: DragItemTypes.CARD,
+    // triggered when dropped
     drop: () => {
-      console.log('dropped in', title)
+      console.log('dropped in', statusNum)
+      return {statusNum}
     },
     collect: monitor => ({
       isOver: !!monitor.isOver(),
@@ -45,7 +47,7 @@ const DashboardCol = ({ children, title }) => {
   })
   const classes = useStyles()
   return (
-    <Grid xs={12} md={3} item>
+    <Grid xs={12} md={3} item ref={drop}>
       <Grid container direction="column" className={classes.root}>
         <Grid item className={classes.title}>
           <Typography variant="body2" className={`${isOver && classes.bold}`}>
@@ -58,7 +60,6 @@ const DashboardCol = ({ children, title }) => {
           direction="column"
           justify="flex-start"
           spacing={1}
-          ref={drop}
         >
           {isOver && <div className={classes.overlay} />}
           {children}
@@ -71,6 +72,8 @@ const DashboardCol = ({ children, title }) => {
 DashboardCol.propTypes = {
   /** Title of column */
   title: PropTypes.string,
+  /** Stories of this status number will be displayed on this column*/
+  statusNum: PropTypes.number.isRequired,
 }
 
 export default DashboardCol

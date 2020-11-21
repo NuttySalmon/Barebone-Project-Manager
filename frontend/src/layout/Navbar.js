@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   AppBar,
   Toolbar,
@@ -7,8 +7,11 @@ import {
   Typography,
   makeStyles,
   fade,
+  LinearProgress,
+  Box,
 } from '@material-ui/core'
 import { Menu, Search } from '@material-ui/icons'
+import { StoriesContext } from '../DataWrapper'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     display: 'none',
     color: theme.palette.text.disabled,
-    "&:hover":{
+    '&:hover': {
       color: theme.palette.primary.main,
     },
     [theme.breakpoints.up('sm')]: {
@@ -76,7 +79,7 @@ const useStyles = makeStyles(theme => ({
 
 const NavBar = () => {
   const classes = useStyles()
-
+  const { ready } = useContext(StoriesContext)
   return (
     <div className={classes.root}>
       <AppBar position="fixed" color="default">
@@ -107,6 +110,10 @@ const NavBar = () => {
           </div>
         </Toolbar>
       </AppBar>
+
+      <Box position="relative" top="1px" minHeight="4px">
+        {ready ? null : <LinearProgress />}
+      </Box>
     </div>
   )
 }

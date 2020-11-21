@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
@@ -20,6 +20,7 @@ import {
 } from '@material-ui/core'
 import { Link as RouterLink } from 'react-router-dom'
 import { DragItemTypes } from './Dashboard'
+import { StoriesContext } from '../DataWrapper'
 
 const useStyles = makeStyles(theme => ({
   dragging: { opacity: 0.3 },
@@ -44,14 +45,22 @@ const useStyles = makeStyles(theme => ({
   textContent: { float: 'left' },
 }))
 
-export default function StoryCard() {
+export default function StoryCard({ id, status }) {
   const classes = useStyles()
+  const { updateStory, setReady } = useContext(StoriesContext)
   // const [hover, setHover] = useState(false)
   const [{ isDragging }, drag] = useDrag({
     item: { type: DragItemTypes.CARD },
     collect: monitor => ({
       isDragging: !!monitor.isDragging(),
     }),
+    //result passed in from target when dropped
+    end: (item, monitor) => {
+      setReady(false)
+      const { statusNum } = monitor.getDropResult()
+      console.log('dropped:', statusNum)
+      updateStory(id, status, 'status', statusNum)
+    },
   })
   return (
     <Grid ref={drag} item className={`${isDragging && classes.dragging}`}>

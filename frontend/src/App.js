@@ -21,12 +21,12 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-        <Navbar />
         <div className={classes.content}>
           <Switch>
             <Route path="/signin" component={SignIn} />
             <Route path="/signup" component={SignUp} />
             <DataWrapper>
+              <Navbar />
               <Route path="/create" component={createProject} />
               <Route exact path="/" component={Dashboard} />
             </DataWrapper>
