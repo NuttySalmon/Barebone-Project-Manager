@@ -77,7 +77,7 @@ const StoryCreate = () => {
                   }}
                 />
               </Grid>
-              <Grid xs={0} md="auto" item>
+              <Grid md="auto" item>
                 <ArrowForward className={classes.arrow} />
               </Grid>
               <Grid xs={12} md={5} item>

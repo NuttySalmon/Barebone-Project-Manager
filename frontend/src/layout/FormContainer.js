@@ -36,7 +36,7 @@ const FormContainer = ({ title, children }) => {
           <Grid className={classes.title} item xs={12} md={4}>
             <Typography variant="h2"> {title} </Typography>
           </Grid>
-          <Grid md={8} className={classes.form}>
+          <Grid md={8} item className={classes.form}>
             {children}
           </Grid>
         </Grid>

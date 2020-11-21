@@ -69,8 +69,8 @@ const DashboardCol = ({ children, title }) => {
 }
 
 DashboardCol.propTypes = {
+  /** Title of column */
   title: PropTypes.string,
-  children: PropTypes.element,
 }
 
 export default DashboardCol

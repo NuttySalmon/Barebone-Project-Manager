@@ -39,7 +39,6 @@ const Dashboard = () => {
   // for loading when getting data
   const classes = useStyle()
   const storiesContext = useContext(StoriesContext)
-  console.log(storiesContext.stories)
   return (
     <DndProvider backend={HTML5Backend}>
       <Container maxWidth="xl" className={classes.root}>
@@ -61,7 +60,6 @@ const Dashboard = () => {
         </Box>
         <Grid container direction="row">
           <DashboardCol title="Backlog">
-            <StoryCard />
             <StoryCard />
             <StoryCard />
             <StoryCard />
