@@ -4,26 +4,24 @@ const { Story } = require('../models')
 const debug = require('debug')('debug:story')
 
 router.post('/create', async (req, res) => {
-  console.log(req.body)
   try {
-    await Story.create(req.body.data, {
+    const result = await Story.create(req.body.data, {
       fields: ['name', 'start_date', 'end_date', 'progress'],
     })
-    res.sendStatus(200)
+    res.status(200).send({ data: result.dataValues})
   } catch (error) {
-    debug(error)
-    res.sendStatus(500)
+    if (error.name === 'SequelizeValidationError') res.status(400).send(error)
+    res.status(500).send(error)
   }
 })
 
 router.get('/all', async (req, res) => {
-  console.log(req.body)
   try {
     const result = await Story.findAll()
-    res.send(result).status(200)
+    res.send({ data: result }).status(200)
   } catch (error) {
     debug(error)
-    res.sendStatus(500)
+    res.status(500).send(error)
   }
 })
 
