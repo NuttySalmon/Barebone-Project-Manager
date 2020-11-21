@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function StoryCard({ id, status }) {
   const classes = useStyles()
-  const { updateStory } = useContext(StoriesContext)
+  const { updateStoryStatus } = useContext(StoriesContext)
 
   /**
    * Values in by useDrag from drop target when dropped
@@ -56,10 +56,11 @@ export default function StoryCard({ id, status }) {
    */
   const handleDrop = (item, monitor) => {
     // get new status value
-    const { statusNum } = monitor.getDropResult()
-    console.log('dropped:', statusNum)
-    // update status value
-    updateStory(id, status, 'status', statusNum)
+    const dropResult = monitor.getDropResult()
+    if (!dropResult) return // ignore if drop result is null
+    const {statusNum} = dropResult
+    console.log('dropped:', statusNum) 
+    updateStoryStatus(id, status, statusNum) // update status value
   }
 
   // setup drag
