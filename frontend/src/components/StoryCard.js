@@ -45,7 +45,7 @@ const useStyles = makeStyles(theme => ({
   textContent: { float: 'left', width: '90%' },
 }))
 
-export default function StoryCard({ id, status }) {
+export default function StoryCard({ id, status, name, end_date }) {
   const classes = useStyles()
   const { updateStoryStatus } = useContext(StoriesContext)
 
@@ -58,8 +58,8 @@ export default function StoryCard({ id, status }) {
     // get new status value
     const dropResult = monitor.getDropResult()
     if (!dropResult) return // ignore if drop result is null
-    const {statusNum} = dropResult
-    console.log('dropped:', statusNum) 
+    const { statusNum } = dropResult
+    console.log('dropped:', statusNum)
     updateStoryStatus(id, status, statusNum) // update status value
   }
 

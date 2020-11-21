@@ -9,7 +9,6 @@ const DataWrapper = ({ children }) => {
   const getStories = async () => {
     try {
       const result = await Axios.get('/api/story/all')
-      setAPIReady(true)
       console.log(result)
       let newStoriesCol = { 0: {}, 1: {}, 2: {}, 3: {} }
       result.data.forEach(story => {
@@ -44,7 +43,10 @@ const DataWrapper = ({ children }) => {
   const APIUpdateStoryStatus = async (id, status) => {
     setAPIReady(false)
     try {
-      Axios.put('/api/story/status-update', { data: { id, status } })
+      const res = await Axios.put('/api/story/status-update', {
+        data: { id, status },
+      })
+      console.log(res)
     } catch (error) {
       console.error(error)
     } finally {
@@ -68,7 +70,7 @@ const DataWrapper = ({ children }) => {
       }
       newStory.status = newStatus // change value
       const newStories = { ...prev } // copy previous stories
-      APIUpdateStoryStatus(id, status) // update database
+      APIUpdateStoryStatus(id, newStatus) // update database
       delete newStories[status][id] // remove old value
       newStories[newStatus][id] = newStory // assign new value
       setFrontendReady(true)
