@@ -42,26 +42,33 @@ const useStyles = makeStyles(theme => ({
   },
   action: { justifyContent: 'flex-end', paddingTop: 0 },
   icon: { marginRight: theme.spacing(1) },
-  textContent: { float: 'left' },
+  textContent: { float: 'left', width: '90%' },
 }))
 
 export default function StoryCard({ id, status }) {
   const classes = useStyles()
-  const { updateStory, setReady } = useContext(StoriesContext)
-  // const [hover, setHover] = useState(false)
+  const { updateStory } = useContext(StoriesContext)
+
+  /**
+   * Values in by useDrag from drop target when dropped
+   * @param {*} item
+   * @param {*} monitor
+   */
+  const handleDrop = (item, monitor) => {
+    // get new status value
+    const { statusNum } = monitor.getDropResult()
+    console.log('dropped:', statusNum)
+    // update status value
+    updateStory(id, status, 'status', statusNum)
+  }
+
+  // setup drag
   const [{ isDragging }, drag] = useDrag({
     item: { type: DragItemTypes.CARD },
-    collect: monitor => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-    //result passed in from target when dropped
-    end: (item, monitor) => {
-      setReady(false)
-      const { statusNum } = monitor.getDropResult()
-      console.log('dropped:', statusNum)
-      updateStory(id, status, 'status', statusNum)
-    },
+    collect: monitor => ({ isDragging: !!monitor.isDragging() }),
+    end: handleDrop,
   })
+
   return (
     <Grid ref={drag} item className={`${isDragging && classes.dragging}`}>
       <Card className={classes.card}>
@@ -81,22 +88,23 @@ export default function StoryCard({ id, status }) {
           <Typography variant="h6" gutterBottom>
             Story bla bla
           </Typography>
-          {/* <Typography variant="body2" component="p"></Typography> */}
           <Typography variant="subtitle2" color="textSecondary">
-            <Grid container item alignItems="center">
-              <DateIcon className={classes.icon} />
-              1/1/2020
-            </Grid>
-            <Grid container item alignItems="center">
-              <PersonIcon className={classes.icon} />
-              <Chip
-                avatar={<Avatar>J</Avatar>}
-                label="John Doe"
-                size="small"
-                variant="outlined"
-                color="primary"
-                clickable
-              />
+            <Grid container item direction="row">
+              <Grid xs={6} container item alignItems="center">
+                <DateIcon className={classes.icon} />
+                1/1/2020
+              </Grid>
+              <Grid xs={6} container item alignItems="center">
+                <PersonIcon className={classes.icon} />
+                <Chip
+                  avatar={<Avatar>J</Avatar>}
+                  label="John Doe"
+                  size="small"
+                  variant="outlined"
+                  color="primary"
+                  clickable
+                />
+              </Grid>
             </Grid>
           </Typography>
         </CardContent>

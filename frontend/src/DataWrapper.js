@@ -3,20 +3,19 @@ import React, { createContext, useEffect, useState } from 'react'
 export const StoriesContext = createContext()
 const DataWrapper = ({ children }) => {
   const [ready, setReady] = useState(false)
-  const [stories, setStories] = useState({})
-  const [storiesCol, setStoriesCol] = useState({ 0: {}, 1: {}, 2: {}, 3: {} })
-  const [colReady, setColReady] = useState(false)
+  const [stories, setStories] = useState({ 0: {}, 1: {}, 2: {}, 3: {} })
+
   const getStories = async () => {
     const result = await Axios.get('/api/story/all')
     console.log(result)
     let newStoriesCol = { 0: {}, 1: {}, 2: {}, 3: {} }
     result.data.forEach(story => {
-      const { id, status } = story
+      let { id, status } = story
       if (status === undefined || status === null || status > 3 || status < 0)
         status = 0
       newStoriesCol[status][id] = story
     })
-    setStoriesCol(newStoriesCol)
+    setStories(newStoriesCol)
     console.log(newStoriesCol)
     setReady(true)
   }
@@ -24,54 +23,40 @@ const DataWrapper = ({ children }) => {
     getStories()
   }, [])
 
-  // const seprateIntoCol = () => {
-  //   const newStoriesInCol = { 0: [], 1: [], 2: [], 3: [] }
-  //   Object.values(stories).forEach(story => {
-  //     const { status } = story
-  //     if (status === undefined || status === null || status > 3 || status < 0)
-  //       newStoriesInCol[0].push(story)
-  //     else newStoriesInCol[status].push(story)
-  //   })
-  //   setStoriesCol(newStoriesInCol)
-  //   console.log(newStoriesInCol)
-  // }
-  // useEffect(seprateIntoCol, [stories])
-
+  /**
+   * Update single story and handle drag and drop changes
+   * @param {number} id  - unique story id
+   * @param {number} status - current status number
+   * @param {string} field - field to be changed
+   * @param {*} value - new value to change the field into
+   */
   const updateStory = (id, status, field, value) => {
-    setStoriesCol(prev => {
+    setReady(false)
+    setStories(prev => {
       // make copy of original data
       const newStory = prev[status][id]
+      // return original data if not found
       if (!newStory) return prev
+      // change value
       newStory[field] = value
+      // copy previous stories
       const newStories = { ...prev }
+      // handle status/column change
       if (field === 'status') {
+        // remove old value
         delete newStories[status][id]
+        // use new value as new column/status
         status = value
       }
+      // assign new value
       newStories[status][id] = newStory
       setReady(true)
       return newStories
     })
   }
-
-  // const statusUpdate = (id, status) => {
-  //   setStories(prev => {
-  //     const story = prev[id]
-  //     if (story) {
-  //       story.status = status
-  //       setReady(true)
-  //       return {
-  //         ...prev,
-  //         [id]: story,
-  //       }
-  //     }
-  //     setReady(true)
-  //     return prev
-  //   })
-  // }
   return (
     <StoriesContext.Provider
-      value={{ stories, ready, storiesCol, colReady, updateStory, setReady }}
+      value={{ ready, stories, updateStory }}
     >
       {children}
     </StoriesContext.Provider>

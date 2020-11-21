@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { Add } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 import {
   Box,
-  CircularProgress,
   Container,
   Grid,
   IconButton,
-  LinearProgress,
   makeStyles,
   Tooltip,
   Typography,
@@ -45,15 +43,15 @@ const colNames = ['Backlog', 'Ready', 'On Going', 'Completed']
 const Dashboard = () => {
   // for loading when getting data
   const classes = useStyle()
-  const { storiesCol, ready } = useContext(StoriesContext)
+  const { stories } = useContext(StoriesContext)
 
   /**
-   * 
-   * @param {number} statusNum 
+   *
+   * @param {number} statusNum
    */
   const getStories = statusNum => {
-    const storyArr = Object.values(storiesCol[statusNum])
-    return storyArr.map(story => <StoryCard {...story} />)
+    const storyArr = Object.values(stories[statusNum])
+    return storyArr.map(story => <StoryCard key={story.id} {...story} />)
   }
 
   const getCols = () => {
