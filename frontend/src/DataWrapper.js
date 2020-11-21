@@ -19,13 +19,28 @@ const DataWrapper = ({ children }) => {
     console.log(newStoriesCol)
     setReady(true)
   }
+
+  // trigger get data when refresh
   useEffect(() => {
     getStories()
   }, [])
 
   /**
+   * Update story status API call
+   * @param {number} id - unique story id for story to update
+   * @param {number} status - new status of story
+   */
+  const APIUpdateStoryStatus = async (id, status) => {
+    try {
+      Axios.put('/api/story/status-update', { data: { id, status } })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  /**
    * Update single story and handle drag and drop changes
-   * @param {number} id  - unique story id
+   * @param {number} id  - unique story id for story to update
    * @param {number} status - current status number
    * @param {string} field - field to be changed
    * @param {*} value - new value to change the field into
@@ -33,31 +48,24 @@ const DataWrapper = ({ children }) => {
   const updateStory = (id, status, field, value) => {
     setReady(false)
     setStories(prev => {
-      // make copy of original data
-      const newStory = prev[status][id]
-      // return original data if not found
-      if (!newStory) return prev
-      // change value
-      newStory[field] = value
-      // copy previous stories
-      const newStories = { ...prev }
+      const newStory = prev[status][id] // make copy of original data
+      if (!newStory) return prev // return original data if not found
+      newStory[field] = value // change value
+      const newStories = { ...prev } // copy previous stories
+
       // handle status/column change
       if (field === 'status') {
-        // remove old value
-        delete newStories[status][id]
-        // use new value as new column/status
-        status = value
+        APIUpdateStoryStatus(id, status) // update database
+        delete newStories[status][id] // remove old value
+        status = value // use new value as new column/status
       }
-      // assign new value
-      newStories[status][id] = newStory
+      newStories[status][id] = newStory // assign new value
       setReady(true)
       return newStories
     })
   }
   return (
-    <StoriesContext.Provider
-      value={{ ready, stories, updateStory }}
-    >
+    <StoriesContext.Provider value={{ ready, stories, updateStory }}>
       {children}
     </StoriesContext.Provider>
   )
