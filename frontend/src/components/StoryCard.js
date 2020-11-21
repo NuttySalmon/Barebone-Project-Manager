@@ -33,16 +33,19 @@ const useStyles = makeStyles(theme => ({
   },
   title: { fontSize: 14 },
   button: {
-    float: 'right',
+    // float: 'right',
     fontSize: 20,
     color: theme.palette.text.secondary,
-    width: 'fit-content',
-    top: theme.spacing(2),
-    right: theme.spacing(2),
+    // width: 'fit-content',
+    // top: theme.spacing(2),
+    // right: theme.spacing(2),
   },
   action: { justifyContent: 'flex-end', paddingTop: 0 },
-  icon: { marginRight: theme.spacing(1) },
-  textContent: { float: 'left', width: '90%' },
+  icon: { fontSize: 15, marginRight: theme.spacing(1) },
+  details: { display: 'flex', alignItems: 'center', marginRight: 'auto' },
+  textContent: {
+    //  float: 'left'
+  },
 }))
 
 export default function StoryCard({ id, status, name, end_date }) {
@@ -73,29 +76,35 @@ export default function StoryCard({ id, status, name, end_date }) {
   return (
     <Grid ref={drag} item className={`${isDragging && classes.dragging}`}>
       <Card className={classes.card}>
-        <Tooltip title="Edit story">
-          <IconButton size="small" className={classes.button}>
-            <SettingsIcon style={{ width: 20 }} />
-          </IconButton>
-        </Tooltip>
         <CardContent className={classes.textContent}>
-          <Typography variant="body2">
-            <Tooltip title="View story details">
-              <Link component={RouterLink} to="/story/123">
-                #123
-              </Link>
-            </Tooltip>
-          </Typography>
+          <Grid container>
+            <Grid item className={classes.details}>
+              <Tooltip title="View story details">
+                <Link component={RouterLink} to={`/story/${id}`}>
+                  <Typography variant="body2">{`#${id}`}</Typography>
+                </Link>
+              </Tooltip>
+            </Grid>
+            <Grid item>
+              <Tooltip title="Edit story">
+                <RouterLink to={`/story/${id}/edit`}>
+                  <IconButton size="small" className={classes.button}>
+                    <SettingsIcon style={{ width: 20 }} />
+                  </IconButton>
+                </RouterLink>
+              </Tooltip>
+            </Grid>
+          </Grid>
           <Typography variant="h6" gutterBottom>
-            Story bla bla
+            {name}
           </Typography>
           <Typography variant="subtitle2" color="textSecondary">
-            <Grid container item direction="row">
-              <Grid xs={6} container item alignItems="center">
+            <Grid container direction="row" alignItems="center" spacing={2}>
+              <Grid item className={classes.details}>
                 <DateIcon className={classes.icon} />
-                1/1/2020
+                {end_date || '-'}
               </Grid>
-              <Grid xs={6} container item alignItems="center">
+              <Grid item className={classes.details}>
                 <PersonIcon className={classes.icon} />
                 <Chip
                   avatar={<Avatar>J</Avatar>}
