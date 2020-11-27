@@ -4,14 +4,21 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "start-watch": "cross-env DEBUG='backend:server,info:*,debug:*' nodemon --inspect=9300 --ignore 'test/**/*.js' ./bin/www",
-    "test": "cross-env NODE_ENV=test ./node_modules/.bin/mocha"
+    "start-watch": "cross-env DEBUG='backend:server,info:*,debug:*,*:error' nodemon --inspect=9300 --ignore 'test/**/*.js' --ignore 'tools/**/*.js' ./bin/www",
+    "test": "cross-env NODE_ENV=test ./node_modules/.bin/mocha",
+    "genkey": "node ./tools/genKey.js"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
-    "debug": "^4.2.0",
+    "debug": "^4.3.1",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "keypair": "^1.0.1",
     "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
     "sequelize": "^6.3.5",
     "sqlite3": "^5.0.0"
   },
@@ -21,12 +28,12 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "cross-env": "^7.0.2",
-    "eslint": "^7.11.0",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-prettier": "^6.12.0",
+    "eslint": "^7.14.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-import": "^2.22.1",
     "mocha": "^8.2.1",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.6",
     "sequelize-cli": "^6.2.0"
   }
 }

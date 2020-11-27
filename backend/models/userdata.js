@@ -1,8 +1,8 @@
-'use strict';
-const { Model } = require('sequelize');
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define("User", {
-    user: {
+  const User = sequelize.define('User', {
+    username: {
       type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false,
@@ -10,11 +10,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      primaryKey: false,
       allowNull: false,
-      unique: false,
     },
-  });
+    firstname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  })
 
   /*User.associate = models => {
     User.belongsToMany(models.Story, {
@@ -22,5 +28,5 @@ module.exports = (sequelize, DataTypes) => {
     });
   };*/
 
-  return User;
-};
+  return User
+}

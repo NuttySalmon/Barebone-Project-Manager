@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core'
 import { Menu, Search } from '@material-ui/icons'
 import { StoriesContext } from '../DataWrapper'
+import UILink from './UILink'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,6 +31,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.text.disabled,
     '&:hover': {
       color: theme.palette.primary.main,
+      textDecoration: 'none'
     },
     [theme.breakpoints.up('sm')]: {
       display: 'block',
@@ -92,9 +94,11 @@ const NavBar = () => {
           >
             <Menu />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Barebone
-          </Typography>
+          <UILink to="/" className={classes.title}>
+            <Typography variant="h6" noWrap>
+              Barebone
+            </Typography>
+          </UILink>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <Search />

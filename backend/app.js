@@ -2,10 +2,14 @@ const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
+const fs = require('fs')
+const errorLog = require('debug')('app:error')
+const passport = require('passport')
 
 const indexRouter = require('./routes/index')
 const exampleRouter = require('./routes/example')
-const story = require('./routes/story')
+const storyRouter = require('./routes/story')
+const userRouter = require('./routes/user')
 const app = express()
 
 app.use(logger('dev'))
@@ -16,5 +20,14 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
 app.use('/api/example', exampleRouter)
-app.use('/api/story', story)
+app.use('/api/story', storyRouter)
+app.use('/api/user', userRouter)
+
+require('dotenv').config({ path: './config/config.env' })
+
+errorLog.log = console.log.bind(console)
+
+app.use(passport.initialize())
+require('./auth')(passport)
+
 module.exports = app
