@@ -49,7 +49,7 @@ const DataWrapper = ({ children }) => {
     try {
       const res = await Axios.put(
         '/api/story/status-update',
-        { data: { id, status } },
+        { id, status },
         getAuthHeader()
       )
       console.log(res)

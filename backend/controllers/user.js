@@ -5,7 +5,7 @@ const debug = require('debug')('debug:user-control')
 
 exports.signup = async (req, res) => {
   try {
-    const newUser = req.body.data
+    const newUser = req.body
     const existingUser = await User.findAll({
       where: { username: newUser.username },
     })

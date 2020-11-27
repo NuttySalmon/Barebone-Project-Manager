@@ -22,7 +22,7 @@ describe('User', () => {
       chai
         .request(app)
         .post(url)
-        .send({ data: user })
+        .send(user)
         .end((err, res) => {
           console.log(res)
           res.should.have.status(200)
@@ -34,7 +34,7 @@ describe('User', () => {
       chai
         .request(app)
         .post(url)
-        .send({ data: {} })
+        .send({})
         .end((err, res) => {
           res.should.have.status(400)
           done()
@@ -45,7 +45,7 @@ describe('User', () => {
       chai
         .request(app)
         .post(url)
-        .send({ data: user })
+        .send(user)
         .end((err, res) => {
           chai
             .request(app)

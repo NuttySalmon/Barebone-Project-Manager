@@ -33,7 +33,7 @@ const StoryCreate = () => {
   const handleSubmit = e => {
     e.preventDefault()
     console.log(storyData)
-    axios.post('/api/story/create', { data: storyData }, getAuthHeader())
+    axios.post('/api/story/create', storyData, getAuthHeader())
   }
 
   const handleChange = (event, field) => {

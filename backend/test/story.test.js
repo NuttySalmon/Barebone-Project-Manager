@@ -18,7 +18,7 @@ describe('Story', () => {
       username: 'jdoe',
       password: 'password',
     }
-    await chai.request(app).post('/api/user/signup').send({ data: user })
+    await chai.request(app).post('/api/user/signup').send(user)
     result = await chai.request(app).post('/api/user/signin').send(user)
     header.Authorization = `Bearer ${result.body.token}`
   })
@@ -36,7 +36,7 @@ describe('Story', () => {
     })
   })
 
-  describe('/CREATE story', () => {
+  describe('/POST story', () => {
     it('Add story', done => {
       const story = {
         name: 'test story',
@@ -44,7 +44,7 @@ describe('Story', () => {
       chai
         .request(app)
         .post('/api/story/create')
-        .send({ data: story })
+        .send(story)
         .set(header)
         .end((_err, res) => {
           res.should.have.status(200)
@@ -62,7 +62,7 @@ describe('Story', () => {
         .request(app)
         .post('/api/story/create')
         .set(header)
-        .send({ data: {} })
+        .send({})
         .end((_err, res) => {
           res.should.have.status(400)
           done()
@@ -81,13 +81,13 @@ describe('Story', () => {
         .request(app)
         .post('/api/story/create')
         .set(header)
-        .send({ data: story })
+        .send(story)
       const { id } = res.body
       res = await chai
         .request(app)
         .put(url)
         .set(header)
-        .send({ data: { id: id, status: 2 } })
+        .send({ id: id, status: 2 })
       res.should.have.status(200)
       res.body.should.have.property('affectedRows').be.a('number').eq(1)
     })

@@ -3,7 +3,7 @@ const debug = require('debug')('debug:story-control')
 
 exports.create = async (req, res) => {
   try {
-    const result = await Story.create(req.body.data, {
+    const result = await Story.create(req.body, {
       fields: ['name', 'start_date', 'end_date', 'progress'],
     })
     res.status(200).send(result.dataValues)
@@ -24,14 +24,14 @@ exports.getAll = async (req, res) => {
 }
 
 exports.updateStatus = async (req, res) => {
-  const { data } = req.body
   try {
-    const newStatus = data.status
+    const { status, id } = req.body
+    const newStatus = status
     if (typeof newStatus !== 'number') res.status(400).send('Invalid data type')
     if (newStatus > 3 || newStatus < 0) res.status(400).send('Invalid status')
     const result = await Story.update(
-      { status: Math.floor(data.status) },
-      { where: { id: data.id } }
+      { status: Math.floor(status) },
+      { where: { id } }
     )
     res.status(200).send({ affectedRows: result[0] })
   } catch (error) {
