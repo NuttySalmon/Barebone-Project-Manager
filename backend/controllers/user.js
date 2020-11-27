@@ -48,21 +48,27 @@ exports.signin = async (req, res) => {
     if (isMatch) {
       // user matched
       console.log('matched!')
-      const { id, username } = user[0].dataValues
-      const payload = { id, username } //jwt payload
-      // console.log(payload)
-      jwt.sign(payload, process.env.PRIVATE_KEY, { expiresIn: 3600, algorithm: 'RS256' }, (err, token) => {
-        if (err)
-          res.status(401).send({
-            success: false,
-            error: err,
-          })
-        else
+      const { username } = user[0].dataValues
+      const payload = { username } //jwt payload
+
+      // sign jwt
+      jwt.sign(
+        payload,
+        process.env.PRIVATE_KEY,
+        { expiresIn: 3600, algorithm: 'RS256' },
+        (err, token) => {
+          if (err)
+            return res.status(401).send({
+              success: false,
+              error: err,
+            })
+          // send token back
           res.send({
             success: true,
             token,
           })
-      })
+        }
+      )
     } else {
       return res.status(400).send('Incorrect password')
     }
