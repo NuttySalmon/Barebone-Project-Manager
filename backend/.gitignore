@@ -62,3 +62,8 @@ typings/
 
 #database
 *.sqlite*
+
+#keys
+keys/
+*.key
+*.pem
