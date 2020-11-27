@@ -4,11 +4,8 @@ import { UserContext } from '.'
 
 const SignOut = () => {
   const history = useHistory()
-  const {setToken} = useContext(UserContext)
-  useEffect(() => {
-    setToken('')
-    history.push('/signin')
-  }, [])
+  const { setSignOut } = useContext(UserContext)
+  useEffect(setSignOut, [])
 
   return <div>Signing out...</div>
 }

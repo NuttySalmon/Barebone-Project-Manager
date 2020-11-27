@@ -3,34 +3,29 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import { UserContext } from './components/AuthService'
 export const StoriesContext = createContext()
 const DataWrapper = ({ children }) => {
-  const { setToken } = useContext(UserContext)
+  const { token, setSignOut, getAuthHeader } = useContext(UserContext)
   const [ready, setReady] = useState(false)
   const [frontendReady, setFrontendReady] = useState(false)
   const [APIReady, setAPIReady] = useState(false)
   const [stories, setStories] = useState({ 0: {}, 1: {}, 2: {}, 3: {} })
   const getStories = async () => {
     try {
-      const result = await Axios.get('/api/story/all')
-      if (result.status == '401') setToken('')
-      else {
-        console.log(result)
-        let newStoriesCol = { 0: {}, 1: {}, 2: {}, 3: {} }
-        result.data.forEach(story => {
-          let { id, status } = story
-          if (
-            status === undefined ||
-            status === null ||
-            status > 3 ||
-            status < 0
-          )
-            status = 0
-          newStoriesCol[status][id] = story
-        })
-        setStories(newStoriesCol)
-        console.log(newStoriesCol)
-      }
+      const result = await Axios.get('/api/story/all', {
+        headers: getAuthHeader(),
+      })
+      console.log(result)
+      let newStoriesCol = { 0: {}, 1: {}, 2: {}, 3: {} }
+      result.data.forEach(story => {
+        let { id, status } = story
+        if (status === undefined || status === null || status > 3 || status < 0)
+          status = 0
+        newStoriesCol[status][id] = story
+      })
+      setStories(newStoriesCol)
+      console.log(newStoriesCol)
     } catch (error) {
       console.error(error)
+      if (error.response.status === 401) setSignOut()
     } finally {
       setFrontendReady(true)
       setAPIReady(true)
