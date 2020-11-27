@@ -1,6 +1,5 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
-import ProtectedRoute from './AuthService/ProtectedRoute'
+import { Route, Switch } from 'react-router-dom'
 import Dashboard from './components/Dashboard'
 import StoryCreate from './components/StoryCreate'
 import DataWrapper from './DataWrapper'
@@ -13,8 +12,10 @@ const DataPages = () => {
   return (
     <DataWrapper>
       <NavBar />
-      <Route path="/story/create" component={StoryCreate} />
-      <Route path="/" component={Dashboard} />
+      <Switch>
+        <Route path="/story/create" component={StoryCreate} />
+        <Route exact path="/" component={Dashboard} />
+      </Switch>
     </DataWrapper>
   )
 }

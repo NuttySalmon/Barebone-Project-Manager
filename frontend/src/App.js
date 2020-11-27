@@ -1,14 +1,11 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import Navbar from './layout/Navbar'
+import { BrowserRouter, Route } from 'react-router-dom'
 import AuthService from './AuthService'
 import ProtectedRoute from './AuthService/ProtectedRoute'
-import createProject from './components/StoryCreate'
 import { CssBaseline, makeStyles, ThemeProvider } from '@material-ui/core'
 import theme from './theme'
-import Dashboard from './components/Dashboard'
-import DataWrapper from './DataWrapper'
 import DataPages from './DataPages'
+import NotFound from './components/NotFound'
 
 const useStyles = makeStyles(theme => ({
   content: {
@@ -22,19 +19,18 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      <BrowserRouter>
-        <div className={classes.content}>
-          <Switch>
-            <AuthService>
-              <ProtectedRoute
-                exact
-                path={['/story/*', '/']}
-                component={DataPages}
-              />
-            </AuthService>
-          </Switch>
-        </div>
-      </BrowserRouter>
+      <div className={classes.content}>
+        <BrowserRouter>
+          <AuthService>
+            <ProtectedRoute
+              exact
+              path={['/story/*', '/']}
+              component={DataPages}
+            />
+            <Route path="*" component={NotFound} />
+          </AuthService>
+        </BrowserRouter>
+      </div>
     </ThemeProvider>
   )
 }
