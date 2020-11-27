@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { User } = require('../models')
-const fs = require('fs')
+const debug = require('debug')('debug:user-control')
 
 exports.signup = async (req, res) => {
   try {
@@ -47,7 +47,7 @@ exports.signin = async (req, res) => {
     const isMatch = await bcrypt.compare(password, passwordHash)
     if (isMatch) {
       // user matched
-      console.log('matched!')
+      debug('User found.')
       const { username } = user[0].dataValues
       const payload = { username } //jwt payload
 
@@ -57,16 +57,8 @@ exports.signin = async (req, res) => {
         process.env.PRIVATE_KEY,
         { expiresIn: 3600, algorithm: 'RS256' },
         (err, token) => {
-          if (err)
-            return res.status(401).send({
-              success: false,
-              error: err,
-            })
-          // send token back
-          res.send({
-            success: true,
-            token,
-          })
+          if (err) return res.status(401).send({ success: false, error: err }) // send token back
+          res.send({ success: true, token })
         }
       )
     } else {
