@@ -32,7 +32,9 @@ const AuthService = ({ children }) => {
   /**
    * Get authorization header to be used with Axio
    */
-  const getAuthHeader = () => ({ Authorization: `Bearer ${token}` })
+  const getAuthHeader = () => ({
+    headers: { Authorization: `Bearer ${token}` },
+  })
 
   return (
     <UserContext.Provider

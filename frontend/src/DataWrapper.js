@@ -1,6 +1,7 @@
 import Axios from 'axios'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { UserContext } from './components/AuthService'
+
 export const StoriesContext = createContext()
 const DataWrapper = ({ children }) => {
   const { token, setSignOut, getAuthHeader } = useContext(UserContext)
@@ -10,9 +11,7 @@ const DataWrapper = ({ children }) => {
   const [stories, setStories] = useState({ 0: {}, 1: {}, 2: {}, 3: {} })
   const getStories = async () => {
     try {
-      const result = await Axios.get('/api/story/all', {
-        headers: getAuthHeader(),
-      })
+      const result = await Axios.get('/api/story/all', getAuthHeader())
       console.log(result)
       let newStoriesCol = { 0: {}, 1: {}, 2: {}, 3: {} }
       result.data.forEach(story => {
@@ -48,11 +47,14 @@ const DataWrapper = ({ children }) => {
   const APIUpdateStoryStatus = async (id, status) => {
     setAPIReady(false)
     try {
-      const res = await Axios.put('/api/story/status-update', {
-        data: { id, status },
-      })
+      const res = await Axios.put(
+        '/api/story/status-update',
+        { data: { id, status } },
+        getAuthHeader()
+      )
       console.log(res)
     } catch (error) {
+      if (error.response && error.response.status === 401) setSignOut()
       console.error(error)
     } finally {
       setAPIReady(true)

@@ -4,6 +4,7 @@ import FormContainer from '../../layout/FormContainer'
 import Axios from 'axios'
 import { useHistory, useLocation } from 'react-router-dom'
 import { UserContext } from '.'
+import { StoriesContext } from '../../DataWrapper'
 import UILink from '../../layout/UILink'
 
 const textFieldAttrib = {
@@ -12,10 +13,10 @@ const textFieldAttrib = {
 }
 
 const SignIn = () => {
-  let history = useHistory()
-  let location = useLocation()
-  let { setToken } = useContext(UserContext)
-  let { from } = location.state || { from: { pathname: '/' } }
+  const history = useHistory()
+  const location = useLocation()
+  const { setToken } = useContext(UserContext)
+  const { from } = location.state || { from: { pathname: '/' } }
   const handleSubmit = async e => {
     e.preventDefault()
     const res = await Axios.post('/api/user/signin', { username, password })
