@@ -16,11 +16,11 @@ import {
   Grid,
   IconButton,
   Tooltip,
-  Link,
 } from '@material-ui/core'
 import { Link as RouterLink } from 'react-router-dom'
 import { DragItemTypes } from './Dashboard'
 import { StoriesContext } from '../DataWrapper'
+import UILink from '../layout/UILink'
 
 const useStyles = makeStyles(theme => ({
   dragging: { opacity: 0.3 },
@@ -80,9 +80,9 @@ export default function StoryCard({ id, status, name, end_date }) {
           <Grid container>
             <Grid item className={classes.details}>
               <Tooltip title="View story details">
-                <Link component={RouterLink} to={`/story/${id}`}>
+                <UILink to={`/story/${id}`}>
                   <Typography variant="body2">{`#${id}`}</Typography>
-                </Link>
+                </UILink>
               </Tooltip>
             </Grid>
             <Grid item>

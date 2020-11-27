@@ -4,6 +4,7 @@ import FormContainer from '../../layout/FormContainer'
 import Axios from 'axios'
 import { useHistory, useLocation } from 'react-router-dom'
 import { UserContext } from '.'
+import UILink from '../../layout/UILink'
 
 const textFieldAttrib = {
   fullWidth: true,
@@ -20,6 +21,7 @@ const SignIn = () => {
     const res = await Axios.post('/api/user/signin', { username, password })
     if (res.data.success) {
       setToken(res.data.token)
+      setUsername(username)
       history.push(from)
     }
   }
@@ -54,10 +56,15 @@ const SignIn = () => {
               {...textFieldAttrib}
             />
           </Grid>
-          <Grid item>
-            <Button variant="contained" color="primary" type="submit">
-              Submit
-            </Button>
+          <Grid container item alignItems="center" spacing={1}>
+            <Grid item>
+              <Button variant="contained" color="primary" type="submit">
+                Submit
+              </Button>
+            </Grid>
+            <Grid item>
+              <UILink to="/signup">or Click here to sign up</UILink>
+            </Grid>
           </Grid>
         </Grid>
       </form>

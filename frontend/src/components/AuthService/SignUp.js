@@ -1,11 +1,8 @@
 // @flow
 import React, { useState } from 'react'
-import {
-  Button,
-  TextField,
-  Grid,
-} from '@material-ui/core'
+import { Button, TextField, Grid } from '@material-ui/core'
 import FormContainer from '../../layout/FormContainer'
+import UILink from '../../layout/UILink'
 
 const textFieldAttrib = {
   fullWidth: true,
@@ -69,10 +66,16 @@ const SignUp = () => {
               {...textFieldAttrib}
             />
           </Grid>
-          <Grid item>
-            <Button variant="contained" color="primary" type="submit">
-              Submit
-            </Button>
+
+          <Grid container item alignItems="center" spacing={1}>
+            <Grid item>
+              <Button variant="contained" color="primary" type="submit">
+                Submit
+              </Button>
+            </Grid>
+            <Grid item>
+              <UILink to="/signin">or Click here to sign in</UILink>
+            </Grid>
           </Grid>
         </Grid>
       </form>

@@ -9,11 +9,10 @@ import {
   fade,
   LinearProgress,
   Box,
-  Link,
 } from '@material-ui/core'
 import { Menu, Search } from '@material-ui/icons'
 import { StoriesContext } from '../DataWrapper'
-import { Link as RouterLink } from 'react-router-dom'
+import UILink from './UILink'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -95,11 +94,11 @@ const NavBar = () => {
           >
             <Menu />
           </IconButton>
-          <Link component={RouterLink} to="/" className={classes.title}>
+          <UILink to="/" className={classes.title}>
             <Typography variant="h6" noWrap>
               Barebone
             </Typography>
-          </Link>
+          </UILink>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <Search />

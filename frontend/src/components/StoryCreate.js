@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { UserContext } from './AuthService'
 import { Button, makeStyles, Grid, TextField, Box } from '@material-ui/core'
 import FormContainer from '../layout/FormContainer'
 import { ArrowForward } from '@material-ui/icons'
@@ -20,6 +21,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const StoryCreate = () => {
+  const { getAuthHeader } = useContext(UserContext)
   const classes = useStyles()
   const [storyData, setProjectData] = useState({
     name: '',
@@ -31,7 +33,11 @@ const StoryCreate = () => {
   const handleSubmit = e => {
     e.preventDefault()
     console.log(storyData)
-    axios.post('/api/story/create', { data: storyData })
+    axios.post(
+      '/api/story/create',
+      { data: storyData },
+      { headers: getAuthHeader() }
+    )
   }
 
   const handleChange = (event, field) => {
@@ -40,10 +46,7 @@ const StoryCreate = () => {
       if (value > 100) value = 100
       if (value < 0) value = 0
     }
-    setProjectData({
-      ...storyData,
-      [field]: value,
-    })
+    setProjectData({ ...storyData, [field]: value })
   }
 
   return (
@@ -72,9 +75,7 @@ const StoryCreate = () => {
                     handleChange(e, 'start_date')
                   }}
                   label="Start date"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  InputLabelProps={{ shrink: true }}
                 />
               </Grid>
               <Grid md="auto" item>
