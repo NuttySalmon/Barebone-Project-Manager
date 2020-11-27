@@ -9,9 +9,11 @@ import {
   fade,
   LinearProgress,
   Box,
+  Link,
 } from '@material-ui/core'
 import { Menu, Search } from '@material-ui/icons'
 import { StoriesContext } from '../DataWrapper'
+import { Link as RouterLink } from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,6 +32,7 @@ const useStyles = makeStyles(theme => ({
     color: theme.palette.text.disabled,
     '&:hover': {
       color: theme.palette.primary.main,
+      textDecoration: 'none'
     },
     [theme.breakpoints.up('sm')]: {
       display: 'block',
@@ -92,9 +95,11 @@ const NavBar = () => {
           >
             <Menu />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Barebone
-          </Typography>
+          <Link component={RouterLink} to="/" className={classes.title}>
+            <Typography variant="h6" noWrap>
+              Barebone
+            </Typography>
+          </Link>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <Search />
