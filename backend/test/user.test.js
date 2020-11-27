@@ -9,7 +9,7 @@ chai.use(chaiHttp)
 const user = {
   firstname: 'John',
   lastname: 'Doe',
-  username: 'jdoe',
+  username: 'jdoee',
   password: 'password',
 }
 describe('User', () => {
@@ -24,6 +24,7 @@ describe('User', () => {
         .post(url)
         .send({ data: user })
         .end((err, res) => {
+          console.log(res)
           res.should.have.status(200)
           done()
         })
