@@ -71,7 +71,7 @@ const Dashboard = () => {
                 Story Board
               </Typography>
             </div>
-            <Link to="create">
+            <Link to="./story/create">
               <Tooltip title="Add a new story" aria-label="add">
                 <IconButton>
                   <Add />
@@ -83,8 +83,6 @@ const Dashboard = () => {
         <Grid container direction="row" className={classes.colContainer}>
           {getCols()}
         </Grid>
-        <Link to="signin"> Sign in </Link>
-        <Link to="signup"> Sign up </Link>
       </Container>
     </DndProvider>
   )

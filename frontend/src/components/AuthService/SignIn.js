@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Button, Grid, TextField } from '@material-ui/core'
 import FormContainer from '../../layout/FormContainer'
+import Axios from 'axios'
+import { useHistory, useLocation } from 'react-router-dom'
+import { UserContext } from '.'
 
 const textFieldAttrib = {
   fullWidth: true,
@@ -8,7 +11,19 @@ const textFieldAttrib = {
 }
 
 const SignIn = () => {
-  const handleSubmit = () => {}
+  let history = useHistory()
+  let location = useLocation()
+  let { setToken } = useContext(UserContext)
+  let { from } = location.state || { from: { pathname: '/' } }
+  const handleSubmit = async e => {
+    e.preventDefault()
+    const res = await Axios.post('/api/user/signin', { username, password })
+    if (res.data.success) {
+      setToken(res.data.token)
+      history.push(from)
+    }
+  }
+
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const onChangeUsername = e => {

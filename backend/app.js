@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/', indexRouter)
 app.use('/api/example', exampleRouter)
 app.use('/api/story', storyRouter)
-app.use('/api/users', userRouter)
+app.use('/api/user', userRouter)
 
 require('dotenv').config({ path: './config/config.env' })
 
