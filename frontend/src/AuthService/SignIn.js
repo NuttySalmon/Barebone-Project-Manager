@@ -1,11 +1,10 @@
 import React, { useState, useContext } from 'react'
 import { Button, Grid, TextField } from '@material-ui/core'
-import FormContainer from '../../layout/FormContainer'
+import FormContainer from '../layout/FormContainer'
 import Axios from 'axios'
 import { useHistory, useLocation } from 'react-router-dom'
 import { UserContext } from '.'
-import { StoriesContext } from '../../DataWrapper'
-import UILink from '../../layout/UILink'
+import UILink from '../layout/UILink'
 
 const textFieldAttrib = {
   fullWidth: true,

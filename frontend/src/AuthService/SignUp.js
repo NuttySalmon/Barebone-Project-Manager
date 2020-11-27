@@ -1,8 +1,8 @@
 // @flow
 import React, { useState } from 'react'
 import { Button, TextField, Grid } from '@material-ui/core'
-import FormContainer from '../../layout/FormContainer'
-import UILink from '../../layout/UILink'
+import FormContainer from '../layout/FormContainer'
+import UILink from '../layout/UILink'
 
 const textFieldAttrib = {
   fullWidth: true,

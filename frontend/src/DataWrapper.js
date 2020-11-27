@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import { UserContext } from './components/AuthService'
+import { UserContext } from './AuthService'
 
 export const StoriesContext = createContext()
 const DataWrapper = ({ children }) => {

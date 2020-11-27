@@ -1,13 +1,13 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Navbar from './layout/Navbar'
-import AuthService  from './components/AuthService'
+import AuthService  from './AuthService'
+import ProtectedRoute from './AuthService/ProtectedRoute'
 import createProject from './components/StoryCreate'
 import { CssBaseline, makeStyles, ThemeProvider } from '@material-ui/core'
 import theme from './theme'
 import Dashboard from './components/Dashboard'
 import DataWrapper from './DataWrapper'
-import ProtectedRoute from './components/AuthService/ProtectedRoute'
 
 const useStyles = makeStyles(theme => ({
   content: {
