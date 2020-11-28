@@ -10,6 +10,7 @@ const indexRouter = require('./routes/index')
 const exampleRouter = require('./routes/example')
 const storyRouter = require('./routes/story')
 const userRouter = require('./routes/user')
+const taskRouter = require('./routes/task')
 const app = express()
 
 app.use(logger('dev'))
@@ -22,6 +23,7 @@ app.use('/', indexRouter)
 app.use('/api/example', exampleRouter)
 app.use('/api/story', storyRouter)
 app.use('/api/user', userRouter)
+app.use('/api/task', taskRouter)
 
 require('dotenv').config({ path: './config/config.env' })
 
