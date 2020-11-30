@@ -10,6 +10,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { UserContext } from '../AuthService'
 import { StoriesContext } from '../DataWrapper'
+import NewTask from './NewTask'
 import StoryForm from './StoryForm'
 
 const useStyles = makeStyles(theme => ({
@@ -31,6 +32,7 @@ const StoryDetails = () => {
     start_date: '',
     end_date: '',
     progress: '',
+    Tasks: [],
   })
   const { getAuthHeader, setApiReady } = useContext(UserContext)
   const { updateStoryFrontend } = useContext(StoriesContext)
@@ -41,7 +43,15 @@ const StoryDetails = () => {
       `/api/story/details/?id=${storyId}`,
       getAuthHeader()
     )
-    const { name, start_date, end_date, progress, status, id } = result.data
+    const {
+      name,
+      start_date,
+      end_date,
+      progress,
+      status,
+      id,
+      Tasks,
+    } = result.data
     console.log(result.data)
     setProjectData({
       id,
@@ -50,13 +60,14 @@ const StoryDetails = () => {
       end_date,
       progress,
       status,
+      Tasks,
     })
   }
 
   const handleSubmit = async e => {
     e.preventDefault()
     updateStoryFrontend(storyData)
-    
+
     history.push('/')
   }
 
@@ -68,13 +79,24 @@ const StoryDetails = () => {
     }
     setProjectData({ ...storyData, [field]: value })
   }
+
+  const storyAddTask = (newTask)=>{
+    setProjectData({
+      ...storyData,
+      Tasks: [
+        ...Tasks,
+        newTask
+      ]
+    })
+  }
+
   useEffect(() => {
     getStory()
   }, [])
   return (
     <Container>
       <Paper className={classes.root}>
-        <Grid container spacing={2}>
+        <Grid container spacing={5}>
           <Grid xs={2} sm={8} item>
             <StoryForm
               {...{ storyData, handleChange, handleSubmit }}
@@ -82,7 +104,8 @@ const StoryDetails = () => {
             />
           </Grid>
           <Grid xs={6} sm={4} item>
-            Tasks
+            <Typography variant="h6">Tasks </Typography>
+            <NewTask storyAddTask={storyAddTask} />
           </Grid>
         </Grid>
       </Paper>
