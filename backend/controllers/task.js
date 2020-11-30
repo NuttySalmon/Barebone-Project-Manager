@@ -45,7 +45,7 @@ exports.getAll = async (req, res) => {
       }
 }
 
-exports.updateStatuts = async (req, res) => {
+exports.updateStatus = async (req, res) => {
     try{
         const {name, id, complete} = req.body
         const newName = name
