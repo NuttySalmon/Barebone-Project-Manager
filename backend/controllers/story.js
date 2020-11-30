@@ -1,4 +1,4 @@
-const { Story } = require('../models')
+const { Story, Task } = require('../models')
 const debug = require('debug')('debug:story-control')
 
 exports.create = async (req, res) => {
@@ -40,4 +40,19 @@ exports.updateStatus = async (req, res) => {
     if (error.name === 'SequelizeValidationError') res.status(400).send(error)
     else res.sendStatus(500)
   }
+}
+
+exports.getDetails = async (req, res) => {
+  let story = null
+  let id = req.query.id
+  if (!id) return res.sendStatus(400)
+  try {
+    story = await Story.findByPk(id, {
+      include: [{ model: Task }],
+    })
+  } catch (error) {
+    return res.status(404).send(error)
+  }
+  console.log(id)
+  res.status(200).send(story)
 }
