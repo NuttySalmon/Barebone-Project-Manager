@@ -11,6 +11,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { UserContext } from '../AuthService'
 import { StoriesContext } from '../DataWrapper'
 import NewTask from './NewTask'
+import TaskList from './TaskList'
 import StoryForm from './StoryForm'
 
 const useStyles = makeStyles(theme => ({
@@ -26,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 const StoryDetails = () => {
   const classes = useStyles()
   const { id: storyId } = useParams()
-  const [storyData, setProjectData] = useState({
+  const [storyData, setStoryData] = useState({
     id: storyId,
     name: '',
     start_date: '',
@@ -53,7 +54,8 @@ const StoryDetails = () => {
       Tasks,
     } = result.data
     console.log(result.data)
-    setProjectData({
+
+    setStoryData({
       id,
       name,
       start_date,
@@ -71,24 +73,30 @@ const StoryDetails = () => {
     history.push('/')
   }
 
+
+
   const handleChange = (event, field) => {
     let value = event.target.value
     if (field === 'progress') {
       if (value > 100) value = 100
       if (value < 0) value = 0
     }
-    setProjectData({ ...storyData, [field]: value })
+    setStoryData({ ...storyData, [field]: value })
   }
 
   const storyAddTask = async name => {
-    const newTask = await Axios.post('/api/task/create', {
-      storyId,
-      name: name,
-    }, getAuthHeader())
-    setProjectData({
-      ...storyData,
-      Tasks: [...Tasks, newTask],
-    })
+    const result = await Axios.post(
+      '/api/task/create',
+      {
+        storyId,
+        name: name,
+      },
+      getAuthHeader()
+    )
+    setStoryData(prev=>({
+      ...prev,
+      Tasks: [...prev.Tasks, result.data],
+    }))
   }
 
   useEffect(() => {
@@ -104,9 +112,14 @@ const StoryDetails = () => {
               buttonText="Update"
             />
           </Grid>
-          <Grid xs={6} sm={4} item>
-            <Typography variant="h6">Tasks </Typography>
-            <NewTask storyAddTask={storyAddTask} />
+          <Grid xs={6} sm={4} direction="column" container item>
+            <Grid item>
+              <Typography variant="h6">Tasks </Typography>
+              <NewTask storyAddTask={storyAddTask} />
+            </Grid>
+            <Grid item>
+              <TaskList tasks={storyData.Tasks}/>
+            </Grid>
           </Grid>
         </Grid>
       </Paper>
