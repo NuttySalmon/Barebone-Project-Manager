@@ -80,13 +80,14 @@ const StoryDetails = () => {
     setProjectData({ ...storyData, [field]: value })
   }
 
-  const storyAddTask = (newTask)=>{
+  const storyAddTask = async name => {
+    const newTask = await Axios.post('/api/task/create', {
+      storyId,
+      name: name,
+    }, getAuthHeader())
     setProjectData({
       ...storyData,
-      Tasks: [
-        ...Tasks,
-        newTask
-      ]
+      Tasks: [...Tasks, newTask],
     })
   }
 

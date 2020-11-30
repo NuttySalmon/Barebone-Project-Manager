@@ -3,13 +3,13 @@ import { Add as AddIcon } from '@material-ui/icons'
 import React from 'react'
 import { useState } from 'react'
 
-const NewTask = ({ getAuthHeader, storyAddTask }) => {
+const NewTask = ({ storyAddTask }) => {
   const [taskName, setTaskName] = useState('')
   const addTask = async () => {
     if (taskName) {
       console.log(taskName)
       setTaskName('')
-      // storyAddTask(taskName)
+      storyAddTask(taskName)
     }
   }
   return (

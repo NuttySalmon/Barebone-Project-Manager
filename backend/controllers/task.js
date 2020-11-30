@@ -14,7 +14,7 @@ exports.create = async (req, res) => {
       complete: false,
     }
     const result = await Task.create(newTask)
-    res.status(500).send(result.dataValues)
+    res.status(200).send(result.dataValues)
   } catch (error) {
     if (error.name === 'SequelizeValidationError' || error.name === 'TypeError')
       return res.status(400).send('Invalid name')
