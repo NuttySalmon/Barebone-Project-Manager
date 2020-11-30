@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize');
 const { Story, Task } = require('../models')
 const debug = require('debug')('debug:story-control')
 
@@ -67,6 +68,25 @@ exports.update = async (req, res) => {
     res.status(200).send({ affectedRows: result[0] })
   } catch (error) {
     if (error.name === 'SequelizeValidationError') res.status(400).send(error)
+    res.status(500).send(error)
+  }
+}
+
+
+exports.search = async (req, res) => {
+  const {name} = req.body
+  try{
+    const result = await Story.findAll({
+      where: {
+        name: {
+          [Sequelize.Op.like]: `${name}%`,    
+        }
+      }
+    })
+    res.send(result).status(200)
+  } catch (error) {
+    debug(error)
+    console.log(name)
     res.status(500).send(error)
   }
 }
