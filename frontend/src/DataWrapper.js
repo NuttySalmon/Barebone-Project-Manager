@@ -84,8 +84,36 @@ const DataWrapper = ({ children }) => {
       return newStories
     })
   }
+
+  const updateStory = updatedStory => {
+    setFrontendReady(false)
+    APIUpdateStory()
+    const { id, status } = updatedStory
+    setStories(prev => {
+      const newStories = { ...prev }
+      delete newStories[status][id]
+      setFrontendReady(true)
+      newStories[status][id] = updatedStory
+      return newStories
+    })
+  }
+
+  const APIUpdateStory = async updatedStory => {
+    const result = await Axios.put(
+      `/api/story/update`,
+      updateStory,
+      getAuthHeader()
+    )
+  }
   return (
-    <StoriesContext.Provider value={{ ready, stories, updateStoryStatus }}>
+    <StoriesContext.Provider
+      value={{
+        ready,
+        stories,
+        updateStoryStatus,
+        updateStoryFrontend: updateStory,
+      }}
+    >
       {children}
     </StoriesContext.Provider>
   )

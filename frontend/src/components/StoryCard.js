@@ -80,7 +80,7 @@ export default function StoryCard({ id, status, name, end_date }) {
           <Grid container>
             <Grid item className={classes.details}>
               <Tooltip title="View story details">
-                <UILink to={`/story/${id}`}>
+                <UILink to={`/story/details/${id}`}>
                   <Typography variant="body2">{`#${id}`}</Typography>
                 </UILink>
               </Tooltip>

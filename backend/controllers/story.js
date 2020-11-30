@@ -56,3 +56,17 @@ exports.getDetails = async (req, res) => {
   console.log(id)
   res.status(200).send(story)
 }
+
+exports.update = async (req, res) => {
+  const { id } = req.body
+  try {
+    const result = await Story.update(req.body, {
+      fields: ['name', 'start_date', 'end_date', 'progress'],
+      where: { id },
+    })
+    res.status(200).send({ affectedRows: result[0] })
+  } catch (error) {
+    if (error.name === 'SequelizeValidationError') res.status(400).send(error)
+    res.status(500).send(error)
+  }
+}
