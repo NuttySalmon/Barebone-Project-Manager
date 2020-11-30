@@ -14,6 +14,20 @@ import NewTask from './NewTask'
 import TaskList from './TaskList'
 import StoryForm from './StoryForm'
 
+/**
+ * Order tasks such that completed tasks are after on going
+ * @param {object[]} tasks
+ */
+const orderTasks = tasks => {
+  const completedTasks = []
+  const onGoingTasks = []
+  tasks.forEach(task => {
+    if (task.complete) completedTasks.push(task)
+    else onGoingTasks.push(task)
+  })
+  return [...onGoingTasks, ...completedTasks]
+}
+
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(5),
@@ -62,7 +76,7 @@ const StoryDetails = () => {
       end_date,
       progress,
       status,
-      Tasks,
+      Tasks: orderTasks(Tasks),
     })
   }
 
@@ -73,8 +87,25 @@ const StoryDetails = () => {
     history.push('/')
   }
 
-
-
+  const toggleTaskComplete = async id => {
+    let newValue
+    setStoryData(prev => {
+      const updatedTaskList = prev.Tasks.map(task => {
+        if (task.id === id) {
+          task.complete = !task.complete
+          newValue = task.complete
+        }
+        return task
+      })
+      return { ...prev, Tasks: orderTasks(updatedTaskList) }
+    })
+    const res = await Axios.put(
+      '/api/task/update',
+      { id, complete: newValue },
+      getAuthHeader()
+    )
+    if (res.status === 401) history.push('/signout')
+  }
   const handleChange = (event, field) => {
     let value = event.target.value
     if (field === 'progress') {
@@ -93,7 +124,9 @@ const StoryDetails = () => {
       },
       getAuthHeader()
     )
-    setStoryData(prev=>({
+
+    if (result.status === 401) history.push('/signout')
+    setStoryData(prev => ({
       ...prev,
       Tasks: [...prev.Tasks, result.data],
     }))
@@ -118,7 +151,10 @@ const StoryDetails = () => {
               <NewTask storyAddTask={storyAddTask} />
             </Grid>
             <Grid item>
-              <TaskList tasks={storyData.Tasks}/>
+              <TaskList
+                tasks={storyData.Tasks}
+                toggleTaskComplete={toggleTaskComplete}
+              />
             </Grid>
           </Grid>
         </Grid>

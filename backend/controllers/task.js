@@ -66,15 +66,10 @@ exports.getAll = async (req, res) => {
 
 exports.updateStatus = async (req, res) => {
   try {
-    const { name, id, complete } = req.body
-    if (typeof name !== 'string')
-      return res.status(400).send('Invalid data type')
+    const { id, complete } = req.body
     if (typeof complete !== 'boolean')
       return res.status(400).send('Invalid data type')
-    const result = await Task.update(
-      { complete, name },
-      { where: { id } }
-    )
+    const result = await Task.update({ complete }, { where: { id } })
     res.status(200).send({ affectedRows: result[0] })
   } catch (error) {
     debug(error)
