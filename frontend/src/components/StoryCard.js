@@ -21,6 +21,7 @@ import { Link as RouterLink } from 'react-router-dom'
 import { DragItemTypes } from './Dashboard'
 import { StoriesContext } from '../DataWrapper'
 import UILink from '../layout/UILink'
+import { limitLongStr } from '../utils'
 
 const useStyles = makeStyles(theme => ({
   dragging: { opacity: 0.3 },
@@ -96,7 +97,7 @@ export default function StoryCard({ id, status, name, end_date }) {
             </Grid>
           </Grid>
           <Typography variant="h6" gutterBottom>
-            {name}
+            {limitLongStr(name, 30)}
           </Typography>
           <Typography variant="subtitle2" color="textSecondary">
             <Grid container direction="row" alignItems="center" spacing={2}>
