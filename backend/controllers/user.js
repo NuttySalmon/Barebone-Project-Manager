@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { User } = require('../models')
@@ -66,5 +67,32 @@ exports.signin = async (req, res) => {
     }
   } catch (error) {
     return res.status(500).send(error)
+  }
+}
+
+exports.search = async (req, res) => {
+  const {firstname, lastname} = req.body
+  try{
+    const result = await User.findAll({
+      where: {
+        [Sequelize.Op.or]: [
+          {
+            firstname: {
+              [Sequelize.Op.like]: `${firstname}%`
+            }
+          },
+          {
+            lastname: {
+              [Sequelize.Op.like]: `${lastname}%` 
+            }
+          }
+        ]
+      }
+    })
+    res.send(result).status(200)
+  } catch (error) {
+    debug(error)
+    console.log(firstname)
+    res.status(500).send(error)
   }
 }
