@@ -71,23 +71,24 @@ exports.signin = async (req, res) => {
 }
 
 exports.search = async (req, res) => {
-  const {firstname, lastname} = req.body
-  try{
+  const { firstname, lastname } = req.body
+  try {
     const result = await User.findAll({
+      limit: 20,
       where: {
         [Sequelize.Op.or]: [
           {
             firstname: {
-              [Sequelize.Op.like]: `${firstname}%`
-            }
+              [Sequelize.Op.like]: `${firstname}%`,
+            },
           },
           {
             lastname: {
-              [Sequelize.Op.like]: `${lastname}%` 
-            }
-          }
-        ]
-      }
+              [Sequelize.Op.like]: `${lastname}%`,
+            },
+          },
+        ],
+      },
     })
     res.send(result).status(200)
   } catch (error) {

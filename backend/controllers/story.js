@@ -77,6 +77,7 @@ exports.search = async (req, res) => {
   const {name} = req.body
   try{
     const result = await Story.findAll({
+      limit: 20,
       where: {
         name: {
           [Sequelize.Op.like]: `${name}%`,    

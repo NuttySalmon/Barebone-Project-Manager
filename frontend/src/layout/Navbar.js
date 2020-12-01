@@ -13,6 +13,7 @@ import {
 import { Menu, Search } from '@material-ui/icons'
 import { StoriesContext } from '../DataWrapper'
 import UILink from './UILink'
+import SearchBar from './SearchBar'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -103,7 +104,7 @@ const NavBar = () => {
             <div className={classes.searchIcon}>
               <Search />
             </div>
-            <InputBase
+            <SearchBar
               label="Search…"
               classes={{
                 root: classes.inputRoot,

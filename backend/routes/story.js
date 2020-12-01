@@ -9,6 +9,6 @@ router.get('/all', getAll)
 router.get('/details', getDetails)
 router.put('/status-update', updateStatus)
 router.put('/update', update)
-router.get('/search', search)
+router.post('/search', search)
 
 module.exports = router

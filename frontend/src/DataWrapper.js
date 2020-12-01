@@ -112,7 +112,7 @@ const DataWrapper = ({ children }) => {
         stories,
         updateStoryStatus,
         updateStory,
-        setReady
+        setReady,
       }}
     >
       {children}
