@@ -3,7 +3,7 @@ const { getAll, create, updateStatus, getDetails, update, search } = require('..
 const passport = require('passport')
 var router = express.Router()
 
-//router.all('*', passport.authenticate('jwt', { session: false }))
+router.all('*', passport.authenticate('jwt', { session: false }))
 router.post('/create', create)
 router.get('/all', getAll)
 router.get('/details', getDetails)
