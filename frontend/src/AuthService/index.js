@@ -38,7 +38,14 @@ const AuthService = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ token, setToken, username, setSignOut, getAuthHeader }}
+      value={{
+        token,
+        setToken,
+        setGlobalUsername: setUsername,
+        username,
+        setSignOut,
+        getAuthHeader,
+      }}
     >
       <Switch>
         <Route path="/signin" component={SignIn} />

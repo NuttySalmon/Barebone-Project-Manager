@@ -10,13 +10,7 @@ import {
   Event as DateIcon,
   Person as PersonIcon,
 } from '@material-ui/icons'
-import {
-  Avatar,
-  Chip,
-  Grid,
-  IconButton,
-  Tooltip,
-} from '@material-ui/core'
+import { Avatar, Chip, Grid, IconButton, Tooltip } from '@material-ui/core'
 import { Link as RouterLink } from 'react-router-dom'
 import { DragItemTypes } from './Dashboard'
 import { StoriesContext } from '../DataWrapper'
@@ -49,7 +43,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function StoryCard({ id, status, name, end_date }) {
+export default function StoryCard({ id, status, name, end_date, User }) {
   const classes = useStyles()
   const { updateStoryStatus } = useContext(StoriesContext)
 
@@ -107,14 +101,16 @@ export default function StoryCard({ id, status, name, end_date }) {
               </Grid>
               <Grid item className={classes.details}>
                 <PersonIcon className={classes.icon} />
-                <Chip
-                  avatar={<Avatar>J</Avatar>}
-                  label="John Doe"
-                  size="small"
-                  variant="outlined"
-                  color="primary"
-                  clickable
-                />
+                {User ? (
+                  <Chip
+                    avatar={<Avatar>{User.firstname[0]}</Avatar>}
+                    label={`${User.firstname} ${User.lastname}`}
+                    size="small"
+                    variant="outlined"
+                    color="primary"
+                    clickable
+                  />
+                ) : <p>-</p>}
               </Grid>
             </Grid>
           </Typography>

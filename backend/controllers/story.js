@@ -1,11 +1,13 @@
-const Sequelize = require('sequelize');
-const { Story, Task } = require('../models')
+const Sequelize = require('sequelize')
+const { Story, Task, User } = require('../models')
 const debug = require('debug')('debug:story-control')
 
 exports.create = async (req, res) => {
+  req.body.start_date = fixEmptyDates(req.body.start_date)
+  req.body.end_date = fixEmptyDates(req.body.end_date)
   try {
     const result = await Story.create(req.body, {
-      fields: ['name', 'start_date', 'end_date', 'progress'],
+      fields: ['name', 'start_date', 'end_date', 'progress', 'assigned'],
     })
     res.status(200).send(result.dataValues)
   } catch (error) {
@@ -16,7 +18,11 @@ exports.create = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
-    const result = await Story.findAll()
+    const result = await Story.findAll({
+      include: [
+        { model: User, attributes: ['username', 'firstname', 'lastname'] },
+      ],
+    })
     res.send(result).status(200)
   } catch (error) {
     debug(error)
@@ -58,11 +64,27 @@ exports.getDetails = async (req, res) => {
   res.status(200).send(story)
 }
 
+const fixEmptyDates = dateStr => {
+  if (!dateStr || dateStr === 'Invalid date') return null
+  return dateStr
+}
+
 exports.update = async (req, res) => {
   const { id } = req.body
+  req.body.start_date = fixEmptyDates(req.body.start_date)
+  req.body.end_date = fixEmptyDates(req.body.end_date)
+  console.log(req.body)
+
   try {
     const result = await Story.update(req.body, {
-      fields: ['name', 'start_date', 'end_date', 'progress', 'details'],
+      fields: [
+        'name',
+        'start_date',
+        'end_date',
+        'progress',
+        'details',
+        'assigned',
+      ],
       where: { id },
     })
     res.status(200).send({ affectedRows: result[0] })
@@ -72,17 +94,16 @@ exports.update = async (req, res) => {
   }
 }
 
-
 exports.search = async (req, res) => {
-  const {name} = req.body
-  try{
+  const { name } = req.body
+  try {
     const result = await Story.findAll({
       limit: 20,
       where: {
         name: {
-          [Sequelize.Op.like]: `${name}%`,    
-        }
-      }
+          [Sequelize.Op.like]: `${name}%`,
+        },
+      },
     })
     res.send(result).status(200)
   } catch (error) {

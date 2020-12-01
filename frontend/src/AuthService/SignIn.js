@@ -14,14 +14,14 @@ const textFieldAttrib = {
 const SignIn = () => {
   const history = useHistory()
   const location = useLocation()
-  const { setToken } = useContext(UserContext)
+  const { setToken, setGlobalUsername } = useContext(UserContext)
   const { from } = location.state || { from: { pathname: '/' } }
   const handleSubmit = async e => {
     e.preventDefault()
     const res = await Axios.post('/api/user/signin', { username, password })
     if (res.data.success) {
       setToken(res.data.token)
-      setUsername(username)
+      setGlobalUsername(username)
       history.push(from)
     }
   }

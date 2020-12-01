@@ -15,7 +15,6 @@ import TaskList from './TaskList'
 import StoryForm from './StoryForm'
 import { orderTasks } from '../utils'
 
-
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(5),
@@ -36,6 +35,8 @@ const StoryDetails = () => {
     end_date: '',
     progress: '',
     Tasks: [],
+    details: '',
+    assigned: '',
   })
   const { getAuthHeader } = useContext(UserContext)
   const { updateStory } = useContext(StoriesContext)
@@ -55,6 +56,7 @@ const StoryDetails = () => {
       id,
       Tasks,
       details,
+      assigned,
     } = result.data
     console.log(result.data)
 
@@ -66,6 +68,7 @@ const StoryDetails = () => {
       progress,
       status,
       details,
+      assigned,
       Tasks: orderTasks(Tasks),
     })
   }

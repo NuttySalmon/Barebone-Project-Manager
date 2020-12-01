@@ -5,13 +5,14 @@ import axios from 'axios'
 import StoryForm from './StoryForm'
 
 const StoryCreate = () => {
-  const { getAuthHeader } = useContext(UserContext)
+  const { username, getAuthHeader } = useContext(UserContext)
   const [storyData, setProjectData] = useState({
     name: '',
     start_date: '',
     end_date: '',
     progress: '',
     details: '',
+    assigned: username,
   })
 
   const handleSubmit = e => {

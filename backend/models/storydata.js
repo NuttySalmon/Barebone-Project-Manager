@@ -1,12 +1,12 @@
 'use strict'
 const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-  const Story = sequelize.define("Story", {
+  const Story = sequelize.define('Story', {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-      allowNull: false
+      allowNull: false,
     },
     start_date: {
       type: DataTypes.DATEONLY,
@@ -26,31 +26,37 @@ module.exports = (sequelize, DataTypes) => {
     },
     status: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
+      defaultValue: 0,
     },
-    progress:{
+    progress: {
       type: DataTypes.INTEGER,
-      defaultValue:0
+      defaultValue: 0,
     },
-    details:{
+    details: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
     },
-    Member:{
+    member: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
     },
-  });
+  })
 
   Story.associate = models => {
     Story.hasMany(models.Task, {
-      onDelete: "cascade"
-    });
+      onDelete: 'cascade',
+    })
+
+    Story.belongsTo(models.User, {
+      foreignKey: {
+        name: 'assigned',
+      },
+    })
 
     /*Story.belongsToMany(models.User, {
       through: "User_Story"
     });*/
-  };
+  }
 
   return Story
-};
+}

@@ -91,6 +91,16 @@ const StoryForm = ({
             </Grid>
           </Grid>
         </Grid>
+        <Grid xs={4} item>
+          <TextField
+            {...textFieldAttrib}
+            value={storyData.assigned}
+            onChange={e => {
+              handleChange(e, 'assigned')
+            }}
+            label="Assigned"
+          />
+        </Grid>
         <Grid xs={12} item>
           <TextField
             {...textFieldAttrib}
@@ -103,7 +113,6 @@ const StoryForm = ({
             label="Details"
           />
         </Grid>
-
         <Grid item xs={12}>
           <Button type="submit" variant="contained" color="primary">
             {buttonText}
