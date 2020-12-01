@@ -25,15 +25,12 @@ exports.create = async (req, res) => {
 exports.deleteTask = async (req, res) => {
   try {
     const { id } = req.query
-    const found = id =>
-      Task.findOne({ where: { id } })
-        .then(token => token !== null)
-        .then(isUnique => isUnique)
-    if (found.length) return res.status(404).send('Task does not exist')
+    const found = await Task.findOne({ where: { id } })
+    if (!found) return res.status(404).send(`Task ${id} does not exist`)
     const result = await Task.destroy({
       where: { id },
     })
-    return res.status(200).send({ affectedRows: result[0] })
+    return res.status(200).send(`Task ${id} deleted`)
   } catch (error) {
     debug(error)
     console.log(error)
@@ -66,15 +63,10 @@ exports.getAll = async (req, res) => {
 
 exports.updateStatus = async (req, res) => {
   try {
-    const { name, id, complete } = req.body
-    if (typeof name !== 'string')
-      return res.status(400).send('Invalid data type')
+    const { id, complete } = req.body
     if (typeof complete !== 'boolean')
       return res.status(400).send('Invalid data type')
-    const result = await Task.update(
-      { complete, name },
-      { where: { id } }
-    )
+    const result = await Task.update({ complete }, { where: { id } })
     res.status(200).send({ affectedRows: result[0] })
   } catch (error) {
     debug(error)
