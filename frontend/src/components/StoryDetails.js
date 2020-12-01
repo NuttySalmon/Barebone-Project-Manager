@@ -50,7 +50,7 @@ const StoryDetails = () => {
     Tasks: [],
   })
   const { getAuthHeader, setApiReady } = useContext(UserContext)
-  const { updateStoryFrontend } = useContext(StoriesContext)
+  const { updateStory } = useContext(StoriesContext)
   const history = useHistory()
 
   const getStory = async () => {
@@ -66,6 +66,7 @@ const StoryDetails = () => {
       status,
       id,
       Tasks,
+      details,
     } = result.data
     console.log(result.data)
 
@@ -76,13 +77,14 @@ const StoryDetails = () => {
       end_date,
       progress,
       status,
+      details,
       Tasks: orderTasks(Tasks),
     })
   }
 
   const handleSubmit = async e => {
     e.preventDefault()
-    updateStoryFrontend(storyData)
+    updateStory(storyData)
 
     history.push('/')
   }

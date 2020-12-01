@@ -6,10 +6,6 @@ import { ArrowForward } from '@material-ui/icons'
 import axios from 'axios'
 import StoryForm from './StoryForm'
 
-
-
-
-
 const StoryCreate = () => {
   const { getAuthHeader } = useContext(UserContext)
   const [storyData, setProjectData] = useState({
@@ -17,6 +13,7 @@ const StoryCreate = () => {
     start_date: '',
     end_date: '',
     progress: '',
+    details: '',
   })
 
   const handleSubmit = e => {
@@ -36,7 +33,7 @@ const StoryCreate = () => {
 
   return (
     <FormContainer title="New story">
-      <StoryForm {...{handleChange, storyData, handleChange}}/>
+      <StoryForm {...{ handleChange, storyData, handleSubmit }} />
     </FormContainer>
   )
 }

@@ -62,7 +62,7 @@ exports.update = async (req, res) => {
   const { id } = req.body
   try {
     const result = await Story.update(req.body, {
-      fields: ['name', 'start_date', 'end_date', 'progress'],
+      fields: ['name', 'start_date', 'end_date', 'progress', 'details'],
       where: { id },
     })
     res.status(200).send({ affectedRows: result[0] })

@@ -87,7 +87,7 @@ const DataWrapper = ({ children }) => {
 
   const updateStory = updatedStory => {
     setFrontendReady(false)
-    APIUpdateStory()
+    APIUpdateStory(updatedStory)
     const { id, status } = updatedStory
     setStories(prev => {
       const newStories = { ...prev }
@@ -101,7 +101,7 @@ const DataWrapper = ({ children }) => {
   const APIUpdateStory = async updatedStory => {
     const result = await Axios.put(
       `/api/story/update`,
-      updateStory,
+      updatedStory,
       getAuthHeader()
     )
   }
@@ -111,7 +111,7 @@ const DataWrapper = ({ children }) => {
         ready,
         stories,
         updateStoryStatus,
-        updateStoryFrontend: updateStory,
+        updateStory,
       }}
     >
       {children}

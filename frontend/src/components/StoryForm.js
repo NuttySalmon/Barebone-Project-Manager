@@ -92,7 +92,16 @@ const StoryForm = ({
           </Grid>
         </Grid>
         <Grid xs={12} item>
-          <TextField {...textFieldAttrib} rows={5} multiline label="Details" />
+          <TextField
+            {...textFieldAttrib}
+            value={storyData.details}
+            onChange={e => {
+              handleChange(e, 'details')
+            }}
+            rows={5}
+            multiline
+            label="Details"
+          />
         </Grid>
 
         <Grid item xs={12}>
