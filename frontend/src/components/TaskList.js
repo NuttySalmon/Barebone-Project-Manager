@@ -9,7 +9,7 @@ import {
   ListItemText,
   makeStyles,
 } from '@material-ui/core'
-import { Comment as CommentIcon } from '@material-ui/icons'
+import { Comment as CommentIcon, DeleteOutline } from '@material-ui/icons'
 import React from 'react'
 const useStyle = makeStyles(theme => ({
   crossedOff: {
@@ -17,7 +17,7 @@ const useStyle = makeStyles(theme => ({
     color: theme.palette.grey.dark,
   },
 }))
-const TaskList = ({ tasks, toggleTaskComplete }) => {
+const TaskList = ({ tasks, toggleTaskComplete, deleteTask }) => {
   const classes = useStyle()
   return (
     <List>
@@ -51,7 +51,12 @@ const TaskList = ({ tasks, toggleTaskComplete }) => {
             />
             <ListItemSecondaryAction>
               <IconButton edge="end" aria-label="comments">
-                <CommentIcon />
+                <DeleteOutline
+                  fontSize="small"
+                  onClick={() => {
+                    deleteTask(task.id)
+                  }}
+                />
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>

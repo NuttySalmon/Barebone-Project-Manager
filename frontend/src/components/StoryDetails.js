@@ -106,6 +106,7 @@ const StoryDetails = () => {
     )
     if (res.status === 401) history.push('/signout')
   }
+
   const handleChange = (event, field) => {
     let value = event.target.value
     if (field === 'progress') {
@@ -115,13 +116,19 @@ const StoryDetails = () => {
     setStoryData({ ...storyData, [field]: value })
   }
 
+  const deleteTask = async id => {
+    setStoryData(prev => {
+      const updatedTaskList = prev.Tasks.filter(t => t.id !== id)
+      return { ...prev, Tasks: updatedTaskList }
+    })
+    const res = await Axios.delete(`/api/task/delete?id=${id}`,getAuthHeader())
+    if (res.status === 401) history.push('/signout')
+  }
+
   const storyAddTask = async name => {
     const result = await Axios.post(
       '/api/task/create',
-      {
-        storyId,
-        name: name,
-      },
+      { storyId, name: name },
       getAuthHeader()
     )
 
@@ -139,13 +146,13 @@ const StoryDetails = () => {
     <Container>
       <Paper className={classes.root}>
         <Grid container spacing={5}>
-          <Grid xs={2} sm={8} item>
+          <Grid xs={12} sm={8} item>
             <StoryForm
               {...{ storyData, handleChange, handleSubmit }}
               buttonText="Update"
             />
           </Grid>
-          <Grid xs={6} sm={4} direction="column" container item>
+          <Grid xs={12} sm={4} direction="column" container item>
             <Grid item>
               <Typography variant="h6">Tasks </Typography>
               <NewTask storyAddTask={storyAddTask} />
@@ -154,6 +161,7 @@ const StoryDetails = () => {
               <TaskList
                 tasks={storyData.Tasks}
                 toggleTaskComplete={toggleTaskComplete}
+                deleteTask={deleteTask}
               />
             </Grid>
           </Grid>
