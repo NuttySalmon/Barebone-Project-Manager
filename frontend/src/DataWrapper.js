@@ -4,7 +4,7 @@ import { UserContext } from './AuthService'
 
 export const StoriesContext = createContext()
 const DataWrapper = ({ children }) => {
-  const { token, setSignOut, getAuthHeader } = useContext(UserContext)
+  const { setSignOut, getAuthHeader } = useContext(UserContext)
   const [ready, setReady] = useState(false)
   const [frontendReady, setFrontendReady] = useState(false)
   const [APIReady, setAPIReady] = useState(false)
@@ -112,6 +112,7 @@ const DataWrapper = ({ children }) => {
         stories,
         updateStoryStatus,
         updateStory,
+        setReady
       }}
     >
       {children}

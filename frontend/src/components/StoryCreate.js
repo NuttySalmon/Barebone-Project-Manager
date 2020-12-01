@@ -1,8 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { UserContext } from '../AuthService'
-import { Button, makeStyles, Grid, TextField, Box } from '@material-ui/core'
 import FormContainer from '../layout/FormContainer'
-import { ArrowForward } from '@material-ui/icons'
 import axios from 'axios'
 import StoryForm from './StoryForm'
 

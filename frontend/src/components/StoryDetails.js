@@ -10,23 +10,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { UserContext } from '../AuthService'
 import { StoriesContext } from '../DataWrapper'
-import NewTask from './NewTask'
+import TaskCreate from './TaskCreate'
 import TaskList from './TaskList'
 import StoryForm from './StoryForm'
+import { orderTasks } from '../utils'
 
-/**
- * Order tasks such that completed tasks are after on going
- * @param {object[]} tasks
- */
-const orderTasks = tasks => {
-  const completedTasks = []
-  const onGoingTasks = []
-  tasks.forEach(task => {
-    if (task.complete) completedTasks.push(task)
-    else onGoingTasks.push(task)
-  })
-  return [...onGoingTasks, ...completedTasks]
-}
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,7 +37,7 @@ const StoryDetails = () => {
     progress: '',
     Tasks: [],
   })
-  const { getAuthHeader, setApiReady } = useContext(UserContext)
+  const { getAuthHeader } = useContext(UserContext)
   const { updateStory } = useContext(StoriesContext)
   const history = useHistory()
 
@@ -89,26 +77,6 @@ const StoryDetails = () => {
     history.push('/')
   }
 
-  const toggleTaskComplete = async id => {
-    let newValue
-    setStoryData(prev => {
-      const updatedTaskList = prev.Tasks.map(task => {
-        if (task.id === id) {
-          task.complete = !task.complete
-          newValue = task.complete
-        }
-        return task
-      })
-      return { ...prev, Tasks: orderTasks(updatedTaskList) }
-    })
-    const res = await Axios.put(
-      '/api/task/update',
-      { id, complete: newValue },
-      getAuthHeader()
-    )
-    if (res.status === 401) history.push('/signout')
-  }
-
   const handleChange = (event, field) => {
     let value = event.target.value
     if (field === 'progress') {
@@ -116,29 +84,6 @@ const StoryDetails = () => {
       if (value < 0) value = 0
     }
     setStoryData({ ...storyData, [field]: value })
-  }
-
-  const deleteTask = async id => {
-    setStoryData(prev => {
-      const updatedTaskList = prev.Tasks.filter(t => t.id !== id)
-      return { ...prev, Tasks: updatedTaskList }
-    })
-    const res = await Axios.delete(`/api/task/delete?id=${id}`,getAuthHeader())
-    if (res.status === 401) history.push('/signout')
-  }
-
-  const storyAddTask = async name => {
-    const result = await Axios.post(
-      '/api/task/create',
-      { storyId, name: name },
-      getAuthHeader()
-    )
-
-    if (result.status === 401) history.push('/signout')
-    setStoryData(prev => ({
-      ...prev,
-      Tasks: [...prev.Tasks, result.data],
-    }))
   }
 
   useEffect(() => {
@@ -157,14 +102,10 @@ const StoryDetails = () => {
           <Grid xs={12} sm={4} direction="column" container item>
             <Grid item>
               <Typography variant="h6">Tasks </Typography>
-              <NewTask storyAddTask={storyAddTask} />
+              <TaskCreate storyId={storyId} setStoryData={setStoryData} />
             </Grid>
             <Grid item>
-              <TaskList
-                tasks={storyData.Tasks}
-                toggleTaskComplete={toggleTaskComplete}
-                deleteTask={deleteTask}
-              />
+              <TaskList tasks={storyData.Tasks} setStoryData={setStoryData} />
             </Grid>
           </Grid>
         </Grid>
