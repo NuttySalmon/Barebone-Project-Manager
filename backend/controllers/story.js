@@ -101,7 +101,7 @@ exports.search = async (req, res) => {
       limit: 20,
       where: {
         name: {
-          [Sequelize.Op.like]: `${name}%`,
+          [Sequelize.Op.like]: `%${name}%`,
         },
       },
     })

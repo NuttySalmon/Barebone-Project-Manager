@@ -21,6 +21,7 @@ const useStyle = makeStyles(theme => ({
     backgroundColor: 'white',
     position: 'absolute',
     width: 240,
+    boxShadow: '1px 1px 5px rgba(0,0,0,0.3)',
   },
   noResult: {
     color: theme.palette.grey.dark,
